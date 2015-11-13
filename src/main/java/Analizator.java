@@ -5,7 +5,7 @@ import java.util.Vector;
  */
 public class Analizator {
 
-    public void analize (Vector<Integer> music, Vector<Integer> text){
+    public Vector<Integer> analize (Vector<Integer> music, Vector<Integer> text){
 
         Vector <Integer> endVector = new Vector<Integer>();
 
@@ -13,6 +13,25 @@ public class Analizator {
         endMass = razbienie(music, text);
 
 
+
+        int N = 10;
+        Complex[] x = new Complex[N];
+
+        // original data
+        for (int i = 0; i < N; i++) {
+            //x[i] = new Complex(i, 0);
+            x[i] = new Complex(-2*Math.random() + 1, 0);
+        }
+
+        //FFT.show(x, "x");
+
+        // FFT of original data
+        Complex[] y = FFT.fft(x);
+        //  FFT.show(y, "y = fft(x)");
+
+
+
+        return endVector;
     }
     //разбиение на сегменты массива аудио
     public Vector<Vector<Integer>> razbienie (Vector<Integer> music, Vector<Integer> text){

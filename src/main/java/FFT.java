@@ -2,6 +2,7 @@
  * Created by elena on 12.11.15.
  */
 public class FFT {
+
     public static Complex[] fft(Complex[] x) {
         int N = x.length;
 
@@ -9,7 +10,7 @@ public class FFT {
         if (N == 1) return new Complex[] { x[0] };
 
         // radix 2 Cooley-Tukey FFT
-        if (N % 2 != 0) { throw new RuntimeException("N is not a power of 2"); }
+      //  if (N % 2 != 0) { throw new RuntimeException("N is not a power of 2"); }
 
         // fft of even terms
         Complex[] even = new Complex[N/2];
@@ -62,6 +63,15 @@ public class FFT {
 
         return y;
 
+    }
+
+    public static void show(Complex[] x, String title) {
+        System.out.println(title);
+        System.out.println("-------------------");
+        for (int i = 0; i < x.length; i++) {
+            System.out.println(x[i]);
+        }
+        System.out.println();
     }
 
 }

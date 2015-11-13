@@ -26,12 +26,17 @@ public class Main {
        String filename = "test.mp3";
         //test.testPlay(filename);
 
+
         Vector<Integer> testMusic;
         testMusic = test.getData(filename);
 
         Vector<Integer> endVector = analizator.analize(testMusic, testText);
 
+
+
     }
+
+
 
     public static void testAnalyzator() {
         Vector<Integer> temp = new Vector<Integer>();
