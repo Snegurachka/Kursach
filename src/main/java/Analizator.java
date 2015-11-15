@@ -1,4 +1,3 @@
-import java.util.Collection;
 import java.util.Vector;
 
 /**
@@ -44,8 +43,7 @@ public class Analizator {
                 massSegment[k] = new Complex (music.get(i*K+k), 0);
                 System.out.println(massSegment[k]);
             }
-
-            mass.addAll(i, Collection <massSegment[0]>);//????????????
+            mass.add(massSegment);
         }
         return mass;
     }
