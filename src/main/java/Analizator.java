@@ -1,3 +1,4 @@
+import java.util.Collection;
 import java.util.Vector;
 
 /**
@@ -9,24 +10,13 @@ public class Analizator {
 
         Vector <Integer> endVector = new Vector<Integer>();
 
-        Vector<Vector<Integer>> endMass;
+        Vector<Complex[]> endMass;
         endMass = razbienie(music, text);
-
-
-
-        int N = 10;
-        Complex[] x = new Complex[N];
-
-        // original data
-        for (int i = 0; i < N; i++) {
-            //x[i] = new Complex(i, 0);
-            x[i] = new Complex(-2*Math.random() + 1, 0);
-        }
 
         //FFT.show(x, "x");
 
         // FFT of original data
-        Complex[] y = FFT.fft(x);
+       // Complex[] y = FFT.fft(x);
         //  FFT.show(y, "y = fft(x)");
 
 
@@ -34,24 +24,28 @@ public class Analizator {
         return endVector;
     }
     //разбиение на сегменты массива аудио
-    public Vector<Vector<Integer>> razbienie (Vector<Integer> music, Vector<Integer> text){
+    public Vector<Complex[]> razbienie (Vector<Integer> music, Vector<Integer> text){
         int sizeText = text.size();
         int sizeMusic = music.size();
         int sizeBitText = sizeText*8;
 
+
         int v = (int) Math.ceil((Math.log10((double) sizeBitText) * 3.322 + 1));
         int K =(int) Math.pow(2.0, (double) v+1);
-        double N = Math.ceil(sizeMusic / K); // количество сегментов
+        int N =(int) Math.ceil(sizeMusic / K); // количество сегментов
         double Nn = sizeMusic / K;
 
-        Vector <Vector<Integer>> mass = new Vector<Vector<Integer>>();
-        for (int i = 0; i < N; i ++){
-
-            Vector <Integer> massSegment = new Vector<Integer>();
+        Vector <Complex[]> mass = new Vector<Complex[]>();
+        for (int i = 0; i < 1; i ++){
+            Complex[] massSegment = new Complex[K];
             for ( int k = 0; k < K; k ++){
-                massSegment.add(music.get(i*K+k));
+                massSegment[k] = new Complex(k, 0);
+               // massSegment[k] = new Complex (-2*Math.random() + 1, 0);
+                massSegment[k] = new Complex (music.get(i*K+k), 0);
+                System.out.println(massSegment[k]);
             }
-            mass.add(massSegment);
+
+            mass.addAll(i, Collection <massSegment[0]>);//????????????
         }
         return mass;
     }
