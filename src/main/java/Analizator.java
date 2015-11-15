@@ -41,9 +41,12 @@ public class Analizator {
                 massSegment[k] = new Complex(k, 0);
                // massSegment[k] = new Complex (-2*Math.random() + 1, 0);
                 massSegment[k] = new Complex (music.get(i*K+k), 0);
-                System.out.println(massSegment[k]);
+//                System.out.println(massSegment[k]);
             }
             mass.add(massSegment);
+        }
+        for (int i = 0; i < mass.get(0).length; ++i) {
+            System.out.println(mass.get(0)[i]);
         }
         return mass;
     }
