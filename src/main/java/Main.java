@@ -23,7 +23,7 @@ public class Main {
         analizator.analize(testText);
 
         // Слушаешь музыку
-       String filename = "test.mp3";
+       String filename = "benny_hill.mp3";
         //test.testPlay(filename);
 
 

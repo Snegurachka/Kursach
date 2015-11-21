@@ -12,6 +12,73 @@ public class Analizator {
         Vector<Complex[]> endMass;
         endMass = razbienie(music, text);
 
+        Vector<Complex[]> fEndMass= new Vector<Complex[]>();
+        for( int i = 0; i < endMass.size(); i++){
+            Complex[] fftMass = FFT.fft(endMass.get(i));
+            fEndMass.add(fftMass);
+        }
+
+/*        for (int i = 0; i < fEndMass.get(0).length; ++i) {
+            System.out.println(fEndMass.get(20)[i]);
+        }*/
+
+// получение амплитуд
+        Vector<Vector<Double>> amplitudeVector = new Vector<Vector<Double>>();
+        for (int i = 0; i < fEndMass.size(); i++){
+            Vector<Double> amplitude = new Vector<Double>();
+            for (int k = 0; k < fEndMass.get(i).length; k++) {
+                Double a = fEndMass.get(i)[k].abs();
+                amplitude.add(a);
+            }
+            amplitudeVector.add(amplitude);
+        }
+       //System.out.println(amplitudeVector.get(20));
+
+        // получение фаз
+        Vector<Vector<Double>> phaseVector = new Vector<Vector<Double>>();
+        for (int i = 0; i < fEndMass.size(); i++){
+            Vector<Double> phase = new Vector<Double>();
+            for (int k = 0; k < fEndMass.get(i).length; k++) {
+                Double a = fEndMass.get(i)[k].phase();
+                phase.add(a);
+            }
+            phaseVector.add(phase);
+        }
+
+        //получение разниц раз
+        Vector<Vector<Double>> differencePhaseVector = new Vector<Vector<Double>>();
+        for (int i = 0; i < phaseVector.size(); i++){
+            Vector<Double> differencePhase = new Vector<Double>();
+            differencePhase.add(0.0);
+            for (int k = 1; k < phaseVector.get(i).size(); k++){
+                Double difference = phaseVector.get(i).get(k) - phaseVector.get(i).get(k-1);
+                differencePhase.add(difference);
+            }
+            differencePhaseVector.add(differencePhase);
+        }
+
+        // получение номера сегмента с которого нужно начинать запись
+        //Integer startSegment = nomerSegmenta(phaseVector);
+
+        //кодирование информации получение новых фаз
+
+
+
+        //обратное преобразование из амплитуд и фаз в массив комплексные числа
+
+        // обратное преобразование Фурье
+
+
+
+
+
+        //Complex[] iftMass = FFT.ifft(fftMass);
+
+
+
+        System.out.println(phaseVector.get(40));
+
+
         //FFT.show(x, "x");
 
         // FFT of original data
@@ -28,28 +95,47 @@ public class Analizator {
         int sizeMusic = music.size();
         int sizeBitText = sizeText*8;
 
-
         int v = (int) Math.ceil((Math.log10((double) sizeBitText) * 3.322 + 1));
         int K =(int) Math.pow(2.0, (double) v+1);
         int N =(int) Math.ceil(sizeMusic / K); // количество сегментов
         double Nn = sizeMusic / K;
 
         Vector <Complex[]> mass = new Vector<Complex[]>();
-        for (int i = 0; i < 1; i ++){
+        for (int i = 0; i < N; i ++){
             Complex[] massSegment = new Complex[K];
             for ( int k = 0; k < K; k ++){
                 massSegment[k] = new Complex(k, 0);
-               // massSegment[k] = new Complex (-2*Math.random() + 1, 0);
                 massSegment[k] = new Complex (music.get(i*K+k), 0);
-//                System.out.println(massSegment[k]);
             }
             mass.add(massSegment);
         }
-        for (int i = 0; i < mass.get(0).length; ++i) {
+        /*for (int i = 0; i < mass.get(0).length; ++i) {
             System.out.println(mass.get(0)[i]);
-        }
+        }*/
         return mass;
     }
+
+    public Integer nomerSegmenta (Vector<Vector<Double>> phaseVector) {
+
+        Integer startSegment = 0;
+        for (int i = 0; i < phaseVector.size(); ++i) {
+            for (int k = 0; k < phaseVector.get(i).size(); ++k) {
+                if (phaseVector.get(i).get(k) == 0){
+                    startSegment = i + 1;
+                }
+            }
+        }
+        System.out.println(startSegment);
+        return startSegment;
+    }
+
+
+
+
+
+
+
+
 
 
 
