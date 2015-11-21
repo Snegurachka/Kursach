@@ -1,9 +1,3 @@
-import com.mpatric.mp3agic.*;
-
-import javax.sound.sampled.*;
-import java.io.File;
-import java.io.IOException;
-import java.io.RandomAccessFile;
 import java.util.Vector;
 
 /**
@@ -24,7 +18,9 @@ public class Main {
         testMusic = test.getData(filename);
 
         Analizator analizator = new Analizator();
-        Vector<Integer> endVector = analizator.analize(testMusic, testText);
+        analizator.analize(testMusic, testText);
+        Vector<Integer> endVector = analizator.getEndVector();
+        int startSegment = analizator.getStartSegment();
 
         // Слушаешь музыку
         //test.testPlay(filename);
