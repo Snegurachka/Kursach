@@ -58,8 +58,7 @@ public class Analizator {
         }
 
         // получение номера сегмента с которого нужно начинать запись
-        //Integer startSegment = nomerSegmenta(phaseVector);
-
+        Integer startSegment = nomerSegmenta(phaseVector);
         //кодирование информации получение новых фаз
 
 
@@ -74,9 +73,12 @@ public class Analizator {
 
         //Complex[] iftMass = FFT.ifft(fftMass);
 
-
-
-        System.out.println(phaseVector.get(40));
+        Vector<Double> temp = phaseVector.get(40);
+        for (int i = 0; i < temp.size(); ++i) {
+            if (temp.get(i) == 0) {
+                System.out.println(i + ") " + temp.get(i));
+            }
+        }
 
 
         //FFT.show(x, "x");
@@ -116,17 +118,20 @@ public class Analizator {
     }
 
     public Integer nomerSegmenta (Vector<Vector<Double>> phaseVector) {
-
-        Integer startSegment = 0;
-        for (int i = 0; i < phaseVector.size(); ++i) {
-            for (int k = 0; k < phaseVector.get(i).size(); ++k) {
-                if (phaseVector.get(i).get(k) == 0){
-                    startSegment = i + 1;
-                }
-            }
+        int i = 0;
+        while(isZeroInVector(phaseVector.get(i))) {
+            ++i;
         }
-        System.out.println(startSegment);
-        return startSegment;
+        System.out.println(i);
+        return i;
+    }
+
+    public boolean isZeroInVector(Vector<Double> vector) {
+        for (Double el: vector) {
+            if (el == 0)
+                return true;
+        }
+        return false;
     }
 
 
