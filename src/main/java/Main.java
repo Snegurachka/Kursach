@@ -18,38 +18,17 @@ public class Main {
         String textName = "testkurs.txt";
         TextReader textreader = new TextReader();
         testText = textreader.readFile(textName);
-
-        Analizator analizator = new Analizator();
-        analizator.analize(testText);
-
-        // Слушаешь музыку
-       String filename = "benny_hill.mp3";
-        //test.testPlay(filename);
-
+        String filename = "vals.mp3";
 
         Vector<Integer> testMusic;
         testMusic = test.getData(filename);
 
+        Analizator analizator = new Analizator();
         Vector<Integer> endVector = analizator.analize(testMusic, testText);
 
+        // Слушаешь музыку
+        //test.testPlay(filename);
 
 
-    }
-
-
-
-    public static void testAnalyzator() {
-        Vector<Integer> temp = new Vector<Integer>();
-        temp.add(10);
-        temp.add(7);
-        temp.add(4);
-        temp.add(19);
-        temp.add((int)'a');
-        temp.add((int)'#');
-        temp.add((int)' ');
-
-
-        Analizator analizator = new Analizator();
-        analizator.analize(temp);
     }
 }
