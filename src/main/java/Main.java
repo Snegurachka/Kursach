@@ -21,6 +21,13 @@ public class Main {
         analizator.analize(testMusic, testText);
         Vector<Integer> endVector = analizator.getEndVector();
         int startSegment = analizator.getStartSegment();
+        System.out.print(startSegment);
+        int endSegment = 5;
+        int K = 1024;
+
+
+
+        analizator.backAnalize(endVector,startSegment,endSegment,K);
 
         // Слушаешь музыку
         //test.testPlay(filename);

@@ -7,6 +7,8 @@ public class Analizator {
 
     private Vector<Integer> endVector;
     private Integer startSegment;
+    private Integer K;
+    private Vector<Integer> endBackVector;
 
     public Vector<Integer> getEndVector() {
         return endVector;
@@ -31,10 +33,16 @@ public class Analizator {
     }
 
     public void analize(Vector<Integer> music, Vector<Integer> text) {
+
         Vector<Boolean> textMass = textConversion(text);
         endVector = new Vector<Integer>();
 
-        Vector<Complex[]> endMass = razbienie(music, text);
+        int sizeBitText = text.size() * 8;
+        Double constant = 3.222;
+        int v = (int) Math.ceil((Math.log10((double) sizeBitText) * constant + 1));
+        int K = (int) Math.pow(2.0, (double) v + 1);
+        System.out.print(K);
+        Vector<Complex[]> endMass = razbienie(music, K);
 //        printMas(endMass, 43);
 
         Vector<Complex[]> fEndMass = creationFFTorIFFT(endMass, true);
@@ -42,7 +50,7 @@ public class Analizator {
 
         // получение амплитуд
         Vector<Vector<Double>> amplitudesVector = creationAmplitudes(fEndMass);
-        //System.out.println(amplitudeVector.get(20));
+//        System.out.println(amplitudesVector.get(43));
 
         // получение фаз
         Vector<Vector<Double>> phaseVector = creationPhase(fEndMass);
@@ -68,21 +76,41 @@ public class Analizator {
 //        printMas(endMass, 43);
 
         //получение итогового массива
-        Vector <Complex> end = creationEnd(ifftMass);
+        Vector <Integer> endVector = creationEnd(ifftMass);
+
+
+    }
+
+    public void backAnalize (Vector<Integer> music, Integer startSegment,
+                             Integer endSegment, Integer k){
+
+        endBackVector = new Vector<Integer>();
+
+//        разбиение на сегменты
+        Vector<Complex[]> end2Mass = razbienie(music, k);
+//        printMas(endMass, 43);
+
+//        БПФ
+        Vector<Complex[]> fEnd2Mass = creationFFTorIFFT(end2Mass, true);
+//      printMas(fEndMass, 43);
+
+
+        // получение фаз
+        Vector<Vector<Double>> phaseVector = creationPhase(fEnd2Mass);
+//        printVector(phaseVector, 3);
+
+        //получение кодированного сообщения
+        Vector <Integer> text = poluchenieTexta (phaseVector);
+        System.out.print(text);
+
 
     }
 
     //разбиение на сегменты массива аудио
-    public Vector<Complex[]> razbienie(Vector<Integer> music, Vector<Integer> text) {
-        int sizeText = text.size();
-        int sizeMusic = music.size();
-        int sizeBitText = sizeText * 8;
+    public Vector<Complex[]> razbienie(Vector<Integer> music, Integer K) {
 
-        Double constant = 3.222;
-        int v = (int) Math.ceil((Math.log10((double) sizeBitText) * constant + 1));
-        int K = (int) Math.pow(2.0, (double) v + 1);
-        int N = (int) Math.ceil(sizeMusic / K); // количество сегментов
-        double Nn = sizeMusic / K;
+        int N = (int) Math.ceil(music.size() / K); // количество сегментов
+        double Nn = music.size() / K;
 
         Vector<Complex[]> mass = new Vector<Complex[]>();
         for (int i = 0; i < N; i++) {
@@ -249,14 +277,28 @@ public class Analizator {
         return fEndMass;
     }
 
-    public Vector<Complex> creationEnd (Vector<Complex[]> ifftMass){
-        Vector <Complex>  end = new Vector<Complex>();
+    public Vector<Integer> creationEnd (Vector<Complex[]> ifftMass){
+        Vector <Integer>  end = new Vector<Integer>();
         for ( int i = 0; i < ifftMass.size(); ++i){
             for (int k = 0; k < ifftMass.get(i).length; ++k){
-                end.add(ifftMass.get(i)[k]);
+                end.add((int) ifftMass.get(i)[k].re());
             }
         }
         return end;
+    }
+
+    public Vector<Integer> poluchenieTexta (Vector<Vector<Double>> phaseVector){
+        Vector <Integer> text = new Vector<Integer>();
+        for (int i = 0; i < phaseVector.size(); i++){
+            for (int k = 0; k < phaseVector.get(i).size(); ++k){
+                if (phaseVector.get(i).get(k) > (Math.PI / 3)){
+                    text.add(0);
+                } else if (phaseVector.get(i).get(k) > (Math.PI / (-3))){
+                    text.add(1);
+                }
+            }
+        }
+        return text;
     }
 
 
