@@ -107,7 +107,7 @@ public class Music {
         id3v2Tag.setEncoder("The Encoder");
         mp3file.save("MyMp3File.mp3");
     }
-
+//  прослушивание музыки
     public void testPlay(String filename)
     {
         try {
