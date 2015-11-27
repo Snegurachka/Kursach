@@ -44,6 +44,7 @@ public class Analizator {
 //        printMas(endMass, 3);
 // получение номера сегмента с которого нужно начинать запись
          startSegment = nomerSegmenta(endMass);
+        System.out.print(startSegment);
 
         Vector<Complex[]> fEndMass = creationFFTorIFFT(endMass, true, 0, endMass.size());
 //        printMas(fEndMass, 3);
@@ -125,19 +126,25 @@ public class Analizator {
 
     public Integer nomerSegmenta(Vector<Complex[]> phaseVector) {
         int i = 0;
-        while (!isZeroInVector(phaseVector.get(i))) {
+        while (!isCorrect(phaseVector.get(i))) {
             ++i;
         }
 //        System.out.println(i);
         return i;
     }
 
-    public boolean isZeroInVector(Complex[] vector) {
+    public boolean isCorrect(Complex[] vector) {
+        int count = 0;
         for (Complex el : vector) {
-            if (el.re() != 0.0 && el.im() != 0.0 )
-                return true;
+            if (el.re() == 0.0) {
+                count ++;
+                if (count > 10){
+                    return false;
+                }
+            }
         }
-        return false;
+
+        return true;
     }
 
     public Complex complex(Double amplitude, Double phase) {
