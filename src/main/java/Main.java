@@ -1,4 +1,5 @@
 import java.util.Vector;
+import  java.io.PrintWriter;
 
 /**
  * Created by Neikila on 07.11.2015.
@@ -26,7 +27,16 @@ public class Main {
 
         analizator.backAnalize(endVector, N);
         Vector <Integer> text = analizator.getText();
-//        System.out.print(text);
+
+        PrintWriter out = new PrintWriter("myflle.txt");
+
+        for (int i = 0; i < text.size(); ++i){
+            int a = text.get(i);
+            char b = (char) a;
+            out.println(b);
+        }
+
+        out.close();
 
         // Слушаешь музыку
         //test.testPlay(filename);

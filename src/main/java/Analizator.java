@@ -42,9 +42,15 @@ public class Analizator {
 
         Vector<Complex[]> endMass = razbienie(music, K);
 //        printMas(endMass, 3);
+// получение номера сегмента с которого нужно начинать запись
+         startSegment = nomerSegmenta(endMass);
 
         Vector<Complex[]> fEndMass = creationFFTorIFFT(endMass, true, 0, endMass.size());
 //        printMas(fEndMass, 3);
+
+        // обратное преобразование Фурье
+        Vector<Complex[]> ifftMass2 = creationFFTorIFFT(fEndMass, false, 0, fEndMass.size());
+//        printMas(ifftMass2, 3);
 
         // получение амплитуд
         Vector<Vector<Double>> amplitudesVector = creationAmplitudes(fEndMass);
@@ -53,16 +59,14 @@ public class Analizator {
         // получение фаз
         Vector<Vector<Double>> phaseVector = creationPhase(fEndMass);
 //        printVector(phaseVector, 3);
-//
         //получение разниц раз
-        Vector<Vector<Double>> differencePhaseVector = creationDifferencePhaseVector(phaseVector);
+        Vector<Vector<Double>> differencePhaseVector = creationDifferencePhaseVector(phaseVector, startSegment);
 //        printVector(differencePhaseVector, 0);
 
-        // получение номера сегмента с которого нужно начинать запись
-       // startSegment = nomerSegmenta(phaseVector);
+
 
         //кодирование информации получение новых фаз
-        Vector<Vector<Double>> conversionPhase = conversionNewPhase(phaseVector, differencePhaseVector, textMass);
+        Vector<Vector<Double>> conversionPhase = conversionNewPhase(phaseVector, differencePhaseVector, textMass, startSegment);
 //        printVector(conversionPhase, 3);
 
         //обратное преобразование из амплитуд и фаз в массив комплексные числа
@@ -97,7 +101,7 @@ public class Analizator {
 //        printVector(phaseVector2, 3);
 
         //получение кодированного сообщения
-        text = poluchenieTexta (phaseVector2, sizeBitText);
+        text = poluchenieTexta (phaseVector2, sizeBitText, startSegment);
     }
 
     //разбиение на сегменты массива аудио
@@ -119,7 +123,7 @@ public class Analizator {
         return mass;
     }
 
-    public Integer nomerSegmenta(Vector<Vector<Double>> phaseVector) {
+    public Integer nomerSegmenta(Vector<Complex[]> phaseVector) {
         int i = 0;
         while (!isZeroInVector(phaseVector.get(i))) {
             ++i;
@@ -128,9 +132,9 @@ public class Analizator {
         return i;
     }
 
-    public boolean isZeroInVector(Vector<Double> vector) {
-        for (Double el : vector) {
-            if (el != 0 )
+    public boolean isZeroInVector(Complex[] vector) {
+        for (Complex el : vector) {
+            if (el.re() != 0.0 && el.im() != 0.0 )
                 return true;
         }
         return false;
@@ -171,12 +175,13 @@ public class Analizator {
     public Vector<Vector<Double>> conversionNewPhase(
             Vector<Vector<Double>> phaseVector,
             Vector<Vector<Double>> differencePhaseVector,
-            Vector<Boolean> textMass) {
+            Vector<Boolean> textMass,
+            Integer nomer) {
 
         Vector<Vector<Double>> newPhase = new Vector<Vector<Double>>();
         int counter = 0;
 
-        for (int i = 0; i < 4; ++i){
+        for (int i = 0; i < nomer + 1; ++i){
             Vector<Double> newPhaseOneSegment = new Vector<Double>();
             for (int k = 0; k < phaseVector.get(0).size(); ++k){
                 newPhaseOneSegment.add(phaseVector.get(i).get(k));
@@ -184,20 +189,20 @@ public class Analizator {
             newPhase.add(newPhaseOneSegment);
         }
         Vector<Double> newPhaseOneSegment = new Vector<Double>();
-        for (int i = 0; i < phaseVector.get(3).size(); ++i) {
+        for (int i = 0; i < phaseVector.get(nomer).size(); ++i) {
 
             if (counter < textMass.size()) {
-                if (i > 0 && i < (phaseVector.get(3).size() - 1)) {
+                if (i > 0 && i < (phaseVector.get(nomer).size() - 1)) {
                     if (textMass.get(counter)) {
-                        newPhase.get(3).set((phaseVector.get(3).size() - 1) - i, Math.PI / (-2));
+                        newPhase.get(nomer).set((phaseVector.get(nomer).size() - 1) - i, Math.PI / (-2));
                     } else {
-                        newPhase.get(3).set((phaseVector.get(3).size() - 1) - i, Math.PI / 2);
+                        newPhase.get(nomer).set((phaseVector.get(nomer).size() - 1) - i, Math.PI / 2);
                     }
                     counter++;
                 }
             }
         }
-        for (int i = 4; i < phaseVector.size(); ++i){
+        for (int i = nomer + 1; i < phaseVector.size(); ++i){
             Vector<Double> phasePhase = new Vector<Double>();
             for (int k = 0; k < phaseVector.get(i).size(); ++k){
                 phasePhase.add(newPhase.get(i - 1).get(k) + differencePhaseVector.get(i).get(k));
@@ -234,12 +239,12 @@ public class Analizator {
         return phaseVector;
     }
 //  получение разниц фаз
-    public Vector<Vector<Double>> creationDifferencePhaseVector (Vector<Vector<Double>> phaseVector){
+    public Vector<Vector<Double>> creationDifferencePhaseVector (Vector<Vector<Double>> phaseVector, Integer nomer){
         Vector<Vector<Double>> differencePhaseVector = new Vector<Vector<Double>>();
         for (int i = 0; i < phaseVector.size(); i++) {
             Vector<Double> differencePhase = new Vector<Double>();
             for (int k = 0; k < phaseVector.get(i).size(); k++) {
-                if ((i == 0 || i == 1 || i == 2 || i == 3 )){
+                if ((i <= nomer )){
                     differencePhase.add(0.0);
                 } else {
                     Double difference = phaseVector.get(i).get(k) - phaseVector.get(i - 1).get(k);
@@ -275,14 +280,14 @@ public class Analizator {
         return end;
     }
 
-    public Vector<Integer> poluchenieTexta (Vector<Vector<Double>> phaseVector, int sizeText){
+    public Vector<Integer> poluchenieTexta (Vector<Vector<Double>> phaseVector, int sizeText, Integer nomer){
         Vector <Integer> text = new Vector<Integer>();
-        for (int i = 0; i < phaseVector.get(3).size(); i++) {
+        for (int i = 0; i < phaseVector.get(nomer).size(); i++) {
                 if (i == 0){
                     i ++;
                     continue;
                 }
-                if (phaseVector.get(3).get(phaseVector.get(3).size() - i) > 0) {
+                if (phaseVector.get(nomer).get(phaseVector.get(nomer).size() - i) > 0) {
                     text.add(0);
                 } else {
                     text.add(1);
@@ -292,7 +297,28 @@ public class Analizator {
         for (int i = 0; i < sizeText; ++i){
             textEnd.add(text.get(i));
         }
-        return textEnd;
-    }
 
+        Vector<Vector<Integer>> textOne = new Vector<Vector<Integer>>();
+        int n = 8;
+        for (int i = 0; i < textEnd.size() / 8; ++i){
+            Vector<Integer> one = new Vector<Integer>();
+            for (int k = 0; k < n; ++k){
+                one.add(textEnd.get(i * n + k));
+            }
+            textOne.add(one);
+        }
+
+        Vector<Integer> text1 = new Vector<Integer>();
+
+        for (int i = 0; i < textOne.size(); ++i){
+            int t = 0;
+            for (int k = 0; k < textOne.get(i).size(); ++k){
+                if ( textOne.get(i).get((textOne.get(i).size() - 1) - k) == 1) {
+                    t += Math.pow(2, k);
+                }
+            }
+            text1.add(t);
+        }
+        return text1;
+    }
 }
