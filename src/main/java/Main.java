@@ -1,22 +1,44 @@
-import java.awt.*;
-import java.util.Vector;
-import  java.io.PrintWriter;
-import javax.swing.*;
-import java.awt.*;
+import wav.Test;
+
+import java.util.List;
 
 /**
  * Created by Neikila on 07.11.2015.
  */
 public class Main {
     public static void main(String[] args) throws Exception{
+        String filename = "antonio_vivaldi_-_the_four_seasons_-_winter_zaycev.wav";
+        String filename_v1 = "antonio_vivaldi_-_the_four_seasons_-_winter_zaycev1.wav";
+//        Test1.readFile(filename);
+        Test test = new Test();
+        test.readWav("target/" + filename);
+        Test test1 = new Test();
+        test1.readWav("target/a" + filename);
 
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                SimpleFrame frame = new SimpleFrame();
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.setVisible(true);
+        List<List<Long>> list = test.getBytes();
+        List<List<Long>> list1 = test1.getBytes();
+
+        int size = list.get(0).size();
+        if (size != list1.get(0).size()) {
+            System.out.println("Error");
+            System.exit(1);
+        }
+
+        for (int i = 0; i < size; ++i) {
+            if (!list.get(0).get(i).equals(list1.get(0).get(i)) || !list.get(1).get(i).equals(list1.get(1).get(i)) ) {
+                System.out.println("...........Ups");
+                System.exit(1);
             }
-        });
+        }
+        System.out.println("OK");
+
+//        EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                SimpleFrame frame = new SimpleFrame();
+//                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//                frame.setVisible(true);
+//            }
+//        });
 
 
 
