@@ -11,9 +11,9 @@ public class Main {
         String filename_v1 = "antonio_vivaldi_-_the_four_seasons_-_winter_zaycev1.wav";
 //        Test1.readFile(filename);
         Test test = new Test();
-        test.readWav("target/" + filename);
+        test.readWav(filename);
         Test test1 = new Test();
-        test1.readWav("target/a" + filename);
+        test1.readWav(filename);
 
         List<List<Long>> list = test.getBytes();
         List<List<Long>> list1 = test1.getBytes();
