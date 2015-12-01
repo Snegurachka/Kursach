@@ -1,5 +1,7 @@
 import wav.Test;
 
+import java.util.List;
+
 /**
  * Created by Neikila on 07.11.2015.
  */
@@ -10,25 +12,25 @@ public class Main {
 //        Test1.readFile(filename);
         Test test = new Test();
         test.readWav(filename);
-//        Test test1 = new Test();
-//        test1.readWav(filename);
-//
-//        List<List<Long>> list = test.getBytes();
-//        List<List<Long>> list1 = test1.getBytes();
-//
-//        int size = list.get(0).size();
-//        if (size != list1.get(0).size()) {
-//            System.out.println("Error");
-//            System.exit(1);
-//        }
-//
-//        for (int i = 0; i < size; ++i) {
-//            if (!list.get(0).get(i).equals(list1.get(0).get(i)) || !list.get(1).get(i).equals(list1.get(1).get(i)) ) {
-//                System.out.println("...........Ups");
-//                System.exit(1);
-//            }
-//        }
-//        System.out.println("OK");
+        Test test1 = new Test();
+        test1.readWav(filename);
+
+        List<List<Long>> list = test.getBytes();
+        List<List<Long>> list1 = test1.getBytes();
+
+        int size = list.get(0).size();
+        if (size != list1.get(0).size()) {
+            System.out.println("Error");
+            System.exit(1);
+        }
+
+        for (int i = 0; i < size; ++i) {
+            if (!list.get(0).get(i).equals(list1.get(0).get(i)) || !list.get(1).get(i).equals(list1.get(1).get(i)) ) {
+                System.out.println("...........Ups");
+                System.exit(1);
+            }
+        }
+        System.out.println("OK");
 
 //        EventQueue.invokeLater(new Runnable() {
 //            public void run() {
