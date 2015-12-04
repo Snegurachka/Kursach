@@ -1,5 +1,7 @@
 import wav.Test;
 
+import javax.swing.*;
+import java.awt.*;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,68 +12,68 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) throws Exception{
 
-        String filename = "Vagner.wav";
-        Test test = new Test();
-        test.readWav(filename);
-        List<List<Long>> list = test.getBytes();
-        List<Long> testMusic = list.get(0);
-
-        String textName = "testkurs.txt";
-        TextReader textreader = new TextReader();
-        List<Integer> testText;
-        testText = textreader.readFile(textName);
-
-        Analizator analizator = new Analizator();
-        analizator.analize(testMusic, testText);
-        List<Long> endVector = analizator.getEndList();
-        Integer startSegment = analizator.getStartSegment();
-        Integer textSize = analizator.getTextSize();
-
-
-//      преобразование в один массив
-        List<List<Long>> endMusic = new ArrayList<List<Long>>();
-        List<Long> endOneMusic1 = new ArrayList<Long>();
-        List<Long> endOneMusic2 = new ArrayList<Long>();
-        for (int i = 0; i < list.get(1).size(); ++i){
-            if (i < endVector.size()){
-                endOneMusic1.add(endVector.get(i));
-                endOneMusic2.add(list.get(1).get(i));
-            } else {
-                endOneMusic1.add((long) 0);
-                endOneMusic2.add(list.get(1).get(i));
-            }
-        }
-        endMusic.add(endOneMusic1);
-        endMusic.add(endOneMusic2);
-////        ---------------------------------------
-        test.modificationBytes(endMusic);
-        test.writeWav("1.wav");
-
-        String filename2 = "1.wav";
-        Music test1 = new Music();
-        test1.testPlay(filename2);
-////
-//        ----------------------------------------
-
-        String backfilename = "1.wav";
-        Test backtest = new Test();
-        backtest.readWav(backfilename);
-        List<List<Long>> backlist = backtest.getBytes();
-        List<Long> backTestMusic = backlist.get(0);
-
+//        String filename = "Vagner.wav";
+//        Test test = new Test();
+//        test.readWav(filename);
+//        List<List<Long>> list = test.getBytes();
+//        List<Long> testMusic = list.get(0);
+//
+//        String textName = "testkurs.txt";
+//        TextReader textreader = new TextReader();
+//        List<Integer> testText;
+//        testText = textreader.readFile(textName);
+//
 //        Analizator analizator = new Analizator();
-        analizator.backAnalize(backTestMusic, textSize, startSegment);
-        List<Integer> text = analizator.getText();
-
-        PrintWriter out = new PrintWriter("resulttext.txt");
-
-        for (int i = 0; i < text.size(); ++i){
-            int a = text.get(i);
-            char b = (char) a;
-            out.print(b);
-        }
-
-        out.close();
+//        analizator.analize(testMusic, testText);
+//        List<Long> endVector = analizator.getEndList();
+//        Integer startSegment = analizator.getStartSegment();
+//        Integer textSize = analizator.getTextSize();
+//
+//
+////      преобразование в один массив
+//        List<List<Long>> endMusic = new ArrayList<List<Long>>();
+//        List<Long> endOneMusic1 = new ArrayList<Long>();
+//        List<Long> endOneMusic2 = new ArrayList<Long>();
+//        for (int i = 0; i < list.get(1).size(); ++i){
+//            if (i < endVector.size()){
+//                endOneMusic1.add(endVector.get(i));
+//                endOneMusic2.add(list.get(1).get(i));
+//            } else {
+//                endOneMusic1.add((long) 0);
+//                endOneMusic2.add(list.get(1).get(i));
+//            }
+//        }
+//        endMusic.add(endOneMusic1);
+//        endMusic.add(endOneMusic2);
+//////        ---------------------------------------
+//        test.modificationBytes(endMusic);
+//        test.writeWav("1.wav");
+//
+//        String filename2 = "1.wav";
+//        Music test1 = new Music();
+//        test1.testPlay(filename2);
+//////
+////        ----------------------------------------
+//
+//        String backfilename = "1.wav";
+//        Test backtest = new Test();
+//        backtest.readWav(backfilename);
+//        List<List<Long>> backlist = backtest.getBytes();
+//        List<Long> backTestMusic = backlist.get(0);
+//
+////        Analizator analizator = new Analizator();
+//        analizator.backAnalize(backTestMusic, textSize, startSegment);
+//        List<Integer> text = analizator.getText();
+//
+//        PrintWriter out = new PrintWriter("resulttext.txt");
+//
+//        for (int i = 0; i < text.size(); ++i){
+//            int a = text.get(i);
+//            char b = (char) a;
+//            out.print(b);
+//        }
+//
+//        out.close();
 
 
 //        System.out.println();
@@ -100,7 +102,6 @@ public class Main {
 ////            System.out.println(x[i]);
 ////        }
 //
-//
 //        Complex[] z = FFT.ifft(y);
 //
 //        System.out.println();
@@ -111,14 +112,6 @@ public class Main {
 //        for (int i = 0; i < z.length; ++i){
 //            System.out.println(z[i]);
 //        }
-
-
-
-
-
-
-
-
 
 //        Music test1 = new Music();
 //        test1.testPlay(filename);
@@ -139,13 +132,13 @@ public class Main {
 //        }
 //        System.out.println("OK");
 
-//        EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                SimpleFrame frame = new SimpleFrame();
-//                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//                frame.setVisible(true);
-//            }
-//        });
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                SimpleFrame frame = new SimpleFrame();
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setVisible(true);
+            }
+        });
 
 
 

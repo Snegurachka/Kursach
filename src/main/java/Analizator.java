@@ -54,7 +54,7 @@ public class Analizator {
 
 // получение номера сегмента с которого нужно начинать запись
          startSegment = nomerSegmenta(endMass);
-       System.out.println(startSegment);
+//       System.out.println(startSegment);
 
         List<Complex[]> fEndMass = creationFFTorIFFT(endMass, true, 0, endMass.size());
 //        printMas(fEndMass, 30);
@@ -69,7 +69,7 @@ public class Analizator {
 
         // получение фаз
         List<List<Double>> phaseList = creationPhase(fEndMass);
-        printList(phaseList, 30);
+//        printList(phaseList, 30);
 
         //получение разниц раз
         List<List<Double>> differencePhaseList = creationDifferencePhaseList(phaseList, startSegment);
@@ -77,7 +77,7 @@ public class Analizator {
 
         //кодирование информации получение новых фаз
         List<List<Double>> conversionPhase = conversionNewPhase(phaseList, differencePhaseList, textMass, startSegment);
-        printList(conversionPhase, 30);
+//        printList(conversionPhase, 30);
 
         //обратное преобразование из амплитуд и фаз в массив комплексные числа
         List<Complex[]> endComplexList = endComplexList(amplitudesList, conversionPhase);
@@ -110,10 +110,9 @@ public class Analizator {
         List<List<Double>> phaseList2 = creationPhase(fEndMass2);
 //        printList(phaseList2, 30);
 
-
         //получение кодированного сообщения
         text = poluchenieTexta (phaseList2, sizeBitText, nomer);
-        System.out.print(text);
+//        System.out.print(text);
     }
 
     //разбиение на сегменты массива аудио
@@ -323,9 +322,9 @@ public class Analizator {
         for (int i = 0; i < sizeText; ++i){
             textEnd.add(text.get(i));
         }
-        System.out.println();
-        System.out.print(textEnd);
-        System.out.println();
+//        System.out.println();
+//        System.out.print(textEnd);
+//        System.out.println();
 
         List<List<Integer>> textOne = new ArrayList<List<Integer>>();
         int n = 8;

@@ -26,11 +26,11 @@ public class SimpleFrame extends JFrame {
         setTitle("Выбор метода");
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(null);
-        JButton button = new JButton("Кнопка");
+        JButton button = new JButton("Шифрование");
         button.setSize(300, 100);
         button.setLocation(200, 70);
 
-        JButton button2 = new JButton("Кнопка 2");
+        JButton button2 = new JButton("Дешифрование");
         button2.setSize(300, 100);
         button2.setLocation(200, 220);
         buttonPanel.add(button);
@@ -45,7 +45,16 @@ public class SimpleFrame extends JFrame {
                 frame1.show();
             }
         };
+        ActionListener newAction2 = new
+                ActionListener() {
+                    public void actionPerformed(ActionEvent event) {
+                        Frame1 frame1 = new Frame1();
+                        frame1.show();
+                    }
+                };
+
         button.addActionListener(newAction);
+        button2.addActionListener(newAction2);
     }
 
     private JPanel buttonPanel;
