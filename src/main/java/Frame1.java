@@ -177,7 +177,6 @@ public class Frame1 extends JFrame {
                 }
             }
         });
-
         getContentPane().add(panel);
 
         Toolkit kit = Toolkit.getDefaultToolkit();
@@ -197,7 +196,6 @@ public class Frame1 extends JFrame {
         setLocationRelativeTo(null);
         setVisible(true);
     }
-
     public String getAbsolutePathToAudioFile() {
         return absolutePathToAudioFile;
     }

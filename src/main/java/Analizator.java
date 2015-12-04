@@ -5,8 +5,6 @@ import java.util.List;
  * Created by elena on 09.11.15.
  */
 public class Analizator {
-    
-    
 
     private List<Long> endList;
     private Integer startSegment;
@@ -153,7 +151,6 @@ public class Analizator {
                 }
             }
         }
-
         return true;
     }
 
@@ -232,7 +229,6 @@ public class Analizator {
             }
             newPhase.add(phasePhase);
         }
-
         return newPhase;
     }
 
@@ -317,14 +313,10 @@ public class Analizator {
                     text.add(1);
                 }
         }
-
         List <Integer> textEnd = new ArrayList<Integer>();
-        for (int i = 0; i < sizeText; ++i){
+        for (int i = 0; i < sizeText; ++i) {
             textEnd.add(text.get(i));
         }
-//        System.out.println();
-//        System.out.print(textEnd);
-//        System.out.println();
 
         List<List<Integer>> textOne = new ArrayList<List<Integer>>();
         int n = 8;

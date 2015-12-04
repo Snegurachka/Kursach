@@ -16,15 +16,12 @@ public class FrameDecoder extends JFrame {
         public static final int DEFAULT_WIDTH = 300;
         public static final int DEFAULT_HEIGHT = 200;
 
-
-
         private String absolutePathToAudioFile;
         private Integer startSegment;
         private Integer textSize;
 
         public FrameDecoder() {
             // setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
             JPanel panel = new JPanel();
             panel.setLayout(null);
 
@@ -97,7 +94,7 @@ public class FrameDecoder extends JFrame {
 
             solveButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                   // String backfilename = "1.wav";
+                    // String backfilename = "1.wav";
                     Test backtest = new Test();
                     backtest.readWav(absolutePathToAudioFile);
                     Integer last = absolutePathToAudioFile.lastIndexOf(".");
@@ -112,7 +109,7 @@ public class FrameDecoder extends JFrame {
                     List<Integer> text = analizator.getText();
                     try {
                         PrintWriter out = new PrintWriter(newEndName);
-                        for (int i = 0; i < text.size(); ++i){
+                        for (int i = 0; i < text.size(); ++i) {
                             int a = text.get(i);
                             char b = (char) a;
                             out.print(b);
@@ -147,15 +144,8 @@ public class FrameDecoder extends JFrame {
             // Image img = kit.getImage("icon.gif");
             // setIconImage(img);
             setTitle("Дешифрование");
-//        setPreferredSize(new Dimension(260, 220));
-//        pack();
             setLocationRelativeTo(null);
             setVisible(true);
         }
-
-        public String getAbsolutePathToAudioFile() {
-            return absolutePathToAudioFile;
-        }
-
     }
 
