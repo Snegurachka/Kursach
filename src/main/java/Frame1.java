@@ -22,7 +22,6 @@ public class Frame1 extends JFrame {
 
     public Frame1() {
        // setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         JPanel panel = new JPanel();
         panel.setLayout(null);
 
@@ -192,7 +191,7 @@ public class Frame1 extends JFrame {
         //Установка пиктограммы и заголовка окна
         // Image img = kit.getImage("icon.gif");
         // setIconImage(img);
-        setTitle("Выбор метода");
+        setTitle("Шифрование");
 //        setPreferredSize(new Dimension(260, 220));
 //        pack();
         setLocationRelativeTo(null);

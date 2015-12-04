@@ -48,8 +48,8 @@ public class SimpleFrame extends JFrame {
         ActionListener newAction2 = new
                 ActionListener() {
                     public void actionPerformed(ActionEvent event) {
-                        Frame1 frame1 = new Frame1();
-                        frame1.show();
+                        FrameDecoder decoder = new FrameDecoder();
+                        decoder.show();
                     }
                 };
 
