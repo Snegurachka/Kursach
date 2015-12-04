@@ -1,117 +1,128 @@
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by elena on 09.11.15.
  */
 public class Analizator {
+    
+    
 
-    private Vector<Integer> endVector;
+    private List<Long> endList;
     private Integer startSegment;
-    private Vector<Integer> text;
+    private List<Integer> text;
+    private Integer textSize;
 
-    public Vector<Integer> getEndVector() {
-        return endVector;
+    public Integer getTextSize() {return textSize;}
+
+    public List<Long> getEndList() {
+        return endList;
     }
 
-    public Vector<Integer> getText() {
+    public List<Integer> getText() {
         return text;
     }
 
-    private void printMas(Vector<Complex[]> endMass, int num) {
+    public Integer getStartSegment() { return startSegment;}
+
+    private void printMas(List<Complex[]> endMass, int num) {
         for(int i = 0; i < endMass.get(num).length; ++i){
             System.out.print(endMass.get(num)[i] + ", ");
         }
         System.out.println();
     }
 
-    private void printVector(Vector<Vector<Double>> phaseVector, int num) {
-        for (int i = 0; i < phaseVector.get(num).size(); ++i) {
-            System.out.print(phaseVector.get(num).get(i) + ", ");
+    private void printList(List<List<Double>> phaseList, int num) {
+        for (int i = 0; i < phaseList.get(num).size(); ++i) {
+            System.out.print(phaseList.get(num).get(i) + ", ");
         }
         System.out.println();
     }
 
-    public void analize(Vector<Integer> music, Vector<Integer> text) {
+    public void analize(List<Long> music, List<Integer> text) {
 
-        Vector<Boolean> textMass = textConversion(text);
+        List<Boolean> textMass = textConversion(text);
 
-        int sizeBitText = text.size() * 8;
+        textSize = text.size();
+        int sizeBitText = textSize * 8;
         Double constant = 3.222;
         int v = (int) Math.ceil((Math.log10((double) sizeBitText) * constant + 1));
         int K = (int) Math.pow(2.0, (double) v + 1);
 
-        Vector<Complex[]> endMass = razbienie(music, K);
-//        printMas(endMass, 3);
+        List<Complex[]> endMass = razbienie(music, K);
+//        printMas(endMass, 237);
+
 // получение номера сегмента с которого нужно начинать запись
          startSegment = nomerSegmenta(endMass);
-        System.out.print(startSegment);
+       System.out.println(startSegment);
 
-        Vector<Complex[]> fEndMass = creationFFTorIFFT(endMass, true, 0, endMass.size());
-//        printMas(fEndMass, 3);
+        List<Complex[]> fEndMass = creationFFTorIFFT(endMass, true, 0, endMass.size());
+//        printMas(fEndMass, 30);
 
         // обратное преобразование Фурье
-        Vector<Complex[]> ifftMass2 = creationFFTorIFFT(fEndMass, false, 0, fEndMass.size());
+        List<Complex[]> ifftMass2 = creationFFTorIFFT(fEndMass, false, 0, fEndMass.size());
 //        printMas(ifftMass2, 3);
 
         // получение амплитуд
-        Vector<Vector<Double>> amplitudesVector = creationAmplitudes(fEndMass);
-//        System.out.println(amplitudesVector.get(3));
+        List<List<Double>> amplitudesList = creationAmplitudes(fEndMass);
+//        System.out.println(amplitudesList.get(30));
 
         // получение фаз
-        Vector<Vector<Double>> phaseVector = creationPhase(fEndMass);
-//        printVector(phaseVector, 3);
+        List<List<Double>> phaseList = creationPhase(fEndMass);
+        printList(phaseList, 30);
+
         //получение разниц раз
-        Vector<Vector<Double>> differencePhaseVector = creationDifferencePhaseVector(phaseVector, startSegment);
-//        printVector(differencePhaseVector, 0);
-
-
+        List<List<Double>> differencePhaseList = creationDifferencePhaseList(phaseList, startSegment);
+//        printList(differencePhaseList, 0);
 
         //кодирование информации получение новых фаз
-        Vector<Vector<Double>> conversionPhase = conversionNewPhase(phaseVector, differencePhaseVector, textMass, startSegment);
-//        printVector(conversionPhase, 3);
+        List<List<Double>> conversionPhase = conversionNewPhase(phaseList, differencePhaseList, textMass, startSegment);
+        printList(conversionPhase, 30);
 
         //обратное преобразование из амплитуд и фаз в массив комплексные числа
-        Vector<Complex[]> endComplexVector = endComplexVector(amplitudesVector, conversionPhase);
-//        printMas(endComplexVector, 3);
+        List<Complex[]> endComplexList = endComplexList(amplitudesList, conversionPhase);
+//        printMas(endComplexList, 237);
 
         // обратное преобразование Фурье
-        Vector<Complex[]> ifftMass = creationFFTorIFFT(endComplexVector, false, 0, endComplexVector.size());
-//        printMas(ifftMass, 3);
+        List<Complex[]> ifftMass = creationFFTorIFFT(endComplexList, false, 0, endComplexList.size());
+//        printMas(ifftMass, 237);
 
         //получение итогового массива
-        endVector = creationEnd(ifftMass);
+        endList = creationEnd(ifftMass);
     }
 
-    public void backAnalize (Vector<Integer> music, Integer N){
+    public void backAnalize (List<Long> music, Integer N, Integer nomer){
 
-        text = new Vector<Integer>();
+//        text = new ArrayList<Integer>();
 //        разбиение на сегменты
         int sizeBitText = N * 8;
         Double constant = 3.222;
         int v = (int) Math.ceil((Math.log10((double) sizeBitText) * constant + 1));
         int K = (int) Math.pow(2.0, (double) v + 1);
-        Vector<Complex[]> endMass2 = razbienie(music, K);
-//        printMas(endMass2, 3);
+        List<Complex[]> endMass2 = razbienie(music, K);
+//        printMas(endMass2, 237);
 
 //        БПФ
-        Vector<Complex[]> fEndMass2 = creationFFTorIFFT(endMass2, true, 0, endMass2.size());
-//      printMas(fEndMass2, 3);
+        List<Complex[]> fEndMass2 = creationFFTorIFFT(endMass2, true, 0, endMass2.size());
+//      printMas(fEndMass2, 237);
 
         // получение фаз
-        Vector<Vector<Double>> phaseVector2 = creationPhase(fEndMass2);
-//        printVector(phaseVector2, 3);
+        List<List<Double>> phaseList2 = creationPhase(fEndMass2);
+//        printList(phaseList2, 30);
+
 
         //получение кодированного сообщения
-        text = poluchenieTexta (phaseVector2, sizeBitText, startSegment);
+        text = poluchenieTexta (phaseList2, sizeBitText, nomer);
+        System.out.print(text);
     }
 
     //разбиение на сегменты массива аудио
-    public Vector<Complex[]> razbienie(Vector<Integer> music, Integer K) {
+    public List<Complex[]> razbienie(List<Long> music, Integer K) {
 
         int N = (int) Math.ceil(music.size() / K); // количество сегментов
         double Nn = music.size() / K;
 
-        Vector<Complex[]> mass = new Vector<Complex[]>();
+        List<Complex[]> mass = new ArrayList<Complex[]>();
         for (int i = 0; i < N; i++) {
             Complex[] massSegment = new Complex[K];
             for (int k = 0; k < K; k++) {
@@ -124,18 +135,18 @@ public class Analizator {
         return mass;
     }
 
-    public Integer nomerSegmenta(Vector<Complex[]> phaseVector) {
+    public Integer nomerSegmenta(List<Complex[]> phaseList) {
         int i = 0;
-        while (!isCorrect(phaseVector.get(i))) {
+        while (!isCorrect(phaseList.get(i))) {
             ++i;
         }
 //        System.out.println(i);
         return i;
     }
 
-    public boolean isCorrect(Complex[] vector) {
+    public boolean isCorrect(Complex[] List) {
         int count = 0;
-        for (Complex el : vector) {
+        for (Complex el : List) {
             if (el.re() == 0.0) {
                 count ++;
                 if (count > 10){
@@ -151,20 +162,20 @@ public class Analizator {
         return new Complex(amplitude * Math.cos(phase), amplitude * Math.sin(phase));
     }
 
-    public Vector<Complex[]> endComplexVector(Vector<Vector<Double>> amplitudeVector, Vector<Vector<Double>> phase) {
-        Vector<Complex[]> endCoplexVector = new Vector<Complex[]>();
-        for (int i = 0; i < amplitudeVector.size(); ++i) {
-            Complex[] complexVector = new Complex[amplitudeVector.get(i).size()];
-            for (int k = 0; k < amplitudeVector.get(i).size(); ++k) {
-                complexVector[k] = complex(amplitudeVector.get(i).get(k), phase.get(i).get(k));
+    public List<Complex[]> endComplexList(List<List<Double>> amplitudeList, List<List<Double>> phase) {
+        List<Complex[]> endCoplexList = new ArrayList<Complex[]>();
+        for (int i = 0; i < amplitudeList.size(); ++i) {
+            Complex[] complexList = new Complex[amplitudeList.get(i).size()];
+            for (int k = 0; k < amplitudeList.get(i).size(); ++k) {
+                complexList[k] = complex(amplitudeList.get(i).get(k), phase.get(i).get(k));
             }
-            endCoplexVector.add(complexVector);
+            endCoplexList.add(complexList);
         }
-        return endCoplexVector;
+        return endCoplexList;
     }
 
-    public Vector<Boolean> textConversion(Vector<Integer> text) {
-        Vector<Boolean> bool = new Vector<Boolean>();
+    public List<Boolean> textConversion(List<Integer> text) {
+        List<Boolean> bool = new ArrayList<Boolean>();
 
         for (int i = 0; i < text.size(); ++i) {
             int a = text.get(i);
@@ -179,40 +190,46 @@ public class Analizator {
         return bool;
     }
 
-    public Vector<Vector<Double>> conversionNewPhase(
-            Vector<Vector<Double>> phaseVector,
-            Vector<Vector<Double>> differencePhaseVector,
-            Vector<Boolean> textMass,
+    public List<List<Double>> conversionNewPhase(
+            List<List<Double>> phaseList,
+            List<List<Double>> differencePhaseList,
+            List<Boolean> textMass,
             Integer nomer) {
 
-        Vector<Vector<Double>> newPhase = new Vector<Vector<Double>>();
+        List<List<Double>> newPhase = new ArrayList<List<Double>>();
         int counter = 0;
 
         for (int i = 0; i < nomer + 1; ++i){
-            Vector<Double> newPhaseOneSegment = new Vector<Double>();
-            for (int k = 0; k < phaseVector.get(0).size(); ++k){
-                newPhaseOneSegment.add(phaseVector.get(i).get(k));
+            List<Double> newPhaseOneSegment = new ArrayList<Double>();
+            for (int k = 0; k < phaseList.get(0).size(); ++k){
+                newPhaseOneSegment.add(phaseList.get(i).get(k));
             }
             newPhase.add(newPhaseOneSegment);
         }
-        Vector<Double> newPhaseOneSegment = new Vector<Double>();
-        for (int i = 0; i < phaseVector.get(nomer).size(); ++i) {
+        List<Double> newPhaseOneSegment = new ArrayList<Double>();
+        for (int i = 0; i < phaseList.get(nomer).size(); ++i) {
 
             if (counter < textMass.size()) {
-                if (i > 0 && i < (phaseVector.get(nomer).size() - 1)) {
+                if (i > 0 && i < (phaseList.get(nomer).size() - 1)) {
                     if (textMass.get(counter)) {
-                        newPhase.get(nomer).set((phaseVector.get(nomer).size() - 1) - i, Math.PI / (-2));
+//                        newPhase.get(nomer).set(i, Math.PI / (-2));
+//                        newPhase.get(nomer).set((phaseList.get(nomer).size() / 2) + i, Math.PI / (-2));
+                        newPhase.get(nomer).set((phaseList.get(nomer).size() - 1) - i, Math.PI / (-2));
+                        newPhase.get(nomer).set(i + 1, Math.PI / (2));
                     } else {
-                        newPhase.get(nomer).set((phaseVector.get(nomer).size() - 1) - i, Math.PI / 2);
+//                        newPhase.get(nomer).set(i, Math.PI / 2);
+//                        newPhase.get(nomer).set((phaseList.get(nomer).size() / 2) + i, Math.PI / 2);
+                        newPhase.get(nomer).set((phaseList.get(nomer).size() - 1) - i, Math.PI / 2);
+                        newPhase.get(nomer).set(i + 1, Math.PI / -2);
                     }
                     counter++;
                 }
             }
         }
-        for (int i = nomer + 1; i < phaseVector.size(); ++i){
-            Vector<Double> phasePhase = new Vector<Double>();
-            for (int k = 0; k < phaseVector.get(i).size(); ++k){
-                phasePhase.add(newPhase.get(i - 1).get(k) + differencePhaseVector.get(i).get(k));
+        for (int i = nomer + 1; i < phaseList.size(); ++i){
+            List<Double> phasePhase = new ArrayList<Double>();
+            for (int k = 0; k < phaseList.get(i).size(); ++k){
+                phasePhase.add(newPhase.get(i - 1).get(k) + differencePhaseList.get(i).get(k));
             }
             newPhase.add(phasePhase);
         }
@@ -220,51 +237,51 @@ public class Analizator {
         return newPhase;
     }
 
-    public Vector<Vector<Double>> creationAmplitudes (Vector<Complex[]> fEndMass){
-        Vector<Vector<Double>> amplitudeVector = new Vector<Vector<Double>>();
+    public List<List<Double>> creationAmplitudes (List<Complex[]> fEndMass){
+        List<List<Double>> amplitudeList = new ArrayList<List<Double>>();
         for (int i = 0; i < fEndMass.size(); i++) {
-            Vector<Double> amplitude = new Vector<Double>();
+            List<Double> amplitude = new ArrayList<Double>();
             for (int k = 0; k < fEndMass.get(i).length; k++) {
                 Double a = fEndMass.get(i)[k].abs();
                 amplitude.add(a);
             }
-            amplitudeVector.add(amplitude);
+            amplitudeList.add(amplitude);
         }
-        return amplitudeVector;
+        return amplitudeList;
     }
 
-    public Vector<Vector<Double>> creationPhase (Vector<Complex[]> fEndMass) {
-        Vector<Vector<Double>> phaseVector = new Vector<Vector<Double>>();
+    public List<List<Double>> creationPhase (List<Complex[]> fEndMass) {
+        List<List<Double>> phaseList = new ArrayList<List<Double>>();
         for (int i = 0; i < fEndMass.size(); i++) {
-            Vector<Double> phase = new Vector<Double>();
+            List<Double> phase = new ArrayList<Double>();
             for (int k = 0; k < fEndMass.get(i).length; k++) {
                 Double a = fEndMass.get(i)[k].phase();
                 phase.add(a);
             }
-            phaseVector.add(phase);
+            phaseList.add(phase);
         }
-        return phaseVector;
+        return phaseList;
     }
 //  получение разниц фаз
-    public Vector<Vector<Double>> creationDifferencePhaseVector (Vector<Vector<Double>> phaseVector, Integer nomer){
-        Vector<Vector<Double>> differencePhaseVector = new Vector<Vector<Double>>();
-        for (int i = 0; i < phaseVector.size(); i++) {
-            Vector<Double> differencePhase = new Vector<Double>();
-            for (int k = 0; k < phaseVector.get(i).size(); k++) {
+    public List<List<Double>> creationDifferencePhaseList (List<List<Double>> phaseList, Integer nomer){
+        List<List<Double>> differencePhaseList = new ArrayList<List<Double>>();
+        for (int i = 0; i < phaseList.size(); i++) {
+            List<Double> differencePhase = new ArrayList<Double>();
+            for (int k = 0; k < phaseList.get(i).size(); k++) {
                 if ((i <= nomer )){
                     differencePhase.add(0.0);
                 } else {
-                    Double difference = phaseVector.get(i).get(k) - phaseVector.get(i - 1).get(k);
+                    Double difference = phaseList.get(i).get(k) - phaseList.get(i - 1).get(k);
                     differencePhase.add(difference);
                 }
             }
-            differencePhaseVector.add(differencePhase);
+            differencePhaseList.add(differencePhase);
         }
-        return differencePhaseVector;
+        return differencePhaseList;
     }
 
-    public Vector<Complex[]> creationFFTorIFFT (Vector<Complex[]> mass, Boolean bool, int startSegment, int endSegment) {
-        Vector<Complex[]> fEndMass = new Vector<Complex[]>();
+    public List<Complex[]> creationFFTorIFFT (List<Complex[]> mass, Boolean bool, int startSegment, int endSegment) {
+        List<Complex[]> fEndMass = new ArrayList<Complex[]>();
         for (int i = startSegment; i < endSegment; i++) {
             if (bool){
                 Complex[] fftMass = FFT.fft(mass.get(i));
@@ -277,45 +294,50 @@ public class Analizator {
         return fEndMass;
     }
 
-    public Vector<Integer> creationEnd (Vector<Complex[]> ifftMass){
-        Vector <Integer>  end = new Vector<Integer>();
+    public List<Long> creationEnd (List<Complex[]> ifftMass){
+        List <Long>  end = new ArrayList<Long>();
         for ( int i = 0; i < ifftMass.size(); ++i){
             for (int k = 0; k < ifftMass.get(i).length; ++k){
-                end.add((int) ifftMass.get(i)[k].re());
+                end.add((long) ifftMass.get(i)[k].re());
             }
         }
         return end;
     }
 
-    public Vector<Integer> poluchenieTexta (Vector<Vector<Double>> phaseVector, int sizeText, Integer nomer){
-        Vector <Integer> text = new Vector<Integer>();
-        for (int i = 0; i < phaseVector.get(nomer).size(); i++) {
+    public List<Integer> poluchenieTexta (List<List<Double>> phaseList, int sizeText, Integer nomer){
+
+        List <Integer> text = new ArrayList<Integer>();
+        for (int i = 0; i < phaseList.get(nomer).size(); i++) {
                 if (i == 0){
-                    i ++;
+                    i++;
                     continue;
                 }
-                if (phaseVector.get(nomer).get(phaseVector.get(nomer).size() - i) > 0) {
+                if (phaseList.get(nomer).get(phaseList.get(nomer).size() - i) > 0) {
                     text.add(0);
                 } else {
                     text.add(1);
                 }
         }
-        Vector <Integer> textEnd = new Vector<Integer>();
+
+        List <Integer> textEnd = new ArrayList<Integer>();
         for (int i = 0; i < sizeText; ++i){
             textEnd.add(text.get(i));
         }
+        System.out.println();
+        System.out.print(textEnd);
+        System.out.println();
 
-        Vector<Vector<Integer>> textOne = new Vector<Vector<Integer>>();
+        List<List<Integer>> textOne = new ArrayList<List<Integer>>();
         int n = 8;
         for (int i = 0; i < textEnd.size() / 8; ++i){
-            Vector<Integer> one = new Vector<Integer>();
+            List<Integer> one = new ArrayList<Integer>();
             for (int k = 0; k < n; ++k){
                 one.add(textEnd.get(i * n + k));
             }
             textOne.add(one);
         }
 
-        Vector<Integer> text1 = new Vector<Integer>();
+        List<Integer> text1 = new ArrayList<Integer>();
 
         for (int i = 0; i < textOne.size(); ++i){
             int t = 0;

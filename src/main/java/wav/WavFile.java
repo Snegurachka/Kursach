@@ -689,11 +689,11 @@ public class WavFile
 
 	public void display(PrintStream out)
 	{
-		out.printf("File: %s\n", file);
-		out.printf("Channels: %d, Frames: %d\n", numChannels, numFrames);
-		out.printf("IO State: %s\n", ioState);
-		out.printf("Sample Rate: %d, Block Align: %d\n", sampleRate, blockAlign);
-		out.printf("Valid Bits: %d, Bytes per sample: %d\n", validBits, bytesPerSample);
+//		out.printf("File: %s\n", file);
+//		out.printf("Channels: %d, Frames: %d\n", numChannels, numFrames);
+//		out.printf("IO State: %s\n", ioState);
+//		out.printf("Sample Rate: %d, Block Align: %d\n", sampleRate, blockAlign);
+//		out.printf("Valid Bits: %d, Bytes per sample: %d\n", validBits, bytesPerSample);
 	}
 
 	public static void main(String[] args)

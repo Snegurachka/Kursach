@@ -100,8 +100,8 @@ public class Frame1 extends JFrame {
 //                    testMusic = test.getData(absolutePathToAudioFile);
 
                     Analizator analizator = new Analizator();
-                    analizator.analize(testMusic, testText);
-                    Vector<Integer> endVector = analizator.getEndVector();
+//                    analizator.analize(testMusic, testText);
+//                    Vector<Integer> endVector = analizator.getEndVector();
                 } catch (Exception error) {
                     System.out.println(error);
                     System.out.println("Ошибка при чтении в TextReader");
