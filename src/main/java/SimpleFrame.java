@@ -1,6 +1,4 @@
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,23 +26,23 @@ public class SimpleFrame extends JFrame {
         setTitle("Выбор метода");
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(null);
-        JButton button = new JButton("Шифрование");
-        button.setSize(300, 100);
-        button.setLocation(200, 70);
+        JButton encodeButton = new JButton("Шифрование");
+        encodeButton.setSize(300, 100);
+        encodeButton.setLocation(200, 70);
 
-        JButton button2 = new JButton("Дешифрование");
-        button2.setSize(300, 100);
-        button2.setLocation(200, 220);
-        buttonPanel.add(button);
-        buttonPanel.add(button2);
+        JButton decodeButton = new JButton("Дешифрование");
+        decodeButton.setSize(300, 100);
+        decodeButton.setLocation(200, 220);
+        buttonPanel.add(encodeButton);
+        buttonPanel.add(decodeButton);
 
         setContentPane(buttonPanel);
 
         ActionListener newAction = new
                 ActionListener() {
             public void actionPerformed(ActionEvent event) {
-                Frame1 frame1 = new Frame1();
-                frame1.show();
+                FrameEncoder frameEncoder = new FrameEncoder();
+                frameEncoder.show();
             }
         };
 
@@ -55,8 +53,8 @@ public class SimpleFrame extends JFrame {
                         decoder.show();
                     }
                 };
-        button.addActionListener(newAction);
-        button2.addActionListener(newAction2);
+        encodeButton.addActionListener(newAction);
+        decodeButton.addActionListener(newAction2);
     }
     private JPanel buttonPanel;
     public static final int DEFAULT_WIDTH = 300;

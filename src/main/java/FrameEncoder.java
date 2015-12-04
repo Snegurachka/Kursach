@@ -11,7 +11,7 @@ import java.util.List;
  * Created by elena on 28.11.15.
  */
 
-public class Frame1 extends JFrame {
+public class FrameEncoder extends JFrame {
 
     public static final int DEFAULT_WIDTH = 300;
     public static final int DEFAULT_HEIGHT = 200;
@@ -20,7 +20,7 @@ public class Frame1 extends JFrame {
     private String absolutePathToTextFile;
     private String newEndName;
 
-    public Frame1() {
+    public FrameEncoder() {
        // setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JPanel panel = new JPanel();
         panel.setLayout(null);
