@@ -112,17 +112,25 @@ public class FrameEncoder extends JFrame {
 
         musicStartPlay.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Music test1 = new Music();
-                test1.testPlay(absolutePathToAudioFile);
-                return;
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Music test1 = new Music();
+                        test1.testPlay(absolutePathToAudioFile);
+                    }
+                }).start();
             }
         });
 
         musicEndStartPlay.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Music test1 = new Music();
-                test1.testPlay(newEndName);
-                return;
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Music test1 = new Music();
+                        test1.testPlay(newEndName);
+                    }
+                }).start();
             }
         });
 
