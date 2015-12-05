@@ -1,4 +1,5 @@
 import wav.Test;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -19,8 +20,11 @@ public class FrameEncoder extends JFrame {
     private String absolutePathToAudioFile;
     private String absolutePathToTextFile;
     private String newEndName;
+    final private Music player;
+    private Thread play;
 
     public FrameEncoder() {
+        player = new Music();
        // setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JPanel panel = new JPanel();
         panel.setLayout(null);
@@ -112,25 +116,13 @@ public class FrameEncoder extends JFrame {
 
         musicStartPlay.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Music test1 = new Music();
-                        test1.testPlay(absolutePathToAudioFile);
-                    }
-                }).start();
+                playMusic(absolutePathToAudioFile);
             }
         });
 
         musicEndStartPlay.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Music test1 = new Music();
-                        test1.testPlay(newEndName);
-                    }
-                }).start();
+                playMusic(newEndName);
             }
         });
 
@@ -211,6 +203,25 @@ public class FrameEncoder extends JFrame {
         return absolutePathToTextFile;
     }
     public String getNewEndName() { return newEndName; }
+
+    private void playMusic(final String filenameToPlay) {
+        if (player.isPlaying()) {
+            player.stop();
+            if (play != null)
+                try {
+                    play.join();
+                } catch (Exception exc) {
+
+                }
+        }
+        play = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                player.testPlay(filenameToPlay);
+            }
+        });
+        play.start();
+    }
 }
 
 
