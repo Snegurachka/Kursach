@@ -196,12 +196,15 @@ public class FrameEncoder extends JFrame {
         setLocationRelativeTo(null);
         setVisible(true);
     }
+
     public String getAbsolutePathToAudioFile() {
         return absolutePathToAudioFile;
     }
+
     public String getAbsolutePathToTextFile() {
         return absolutePathToTextFile;
     }
+
     public String getNewEndName() { return newEndName; }
 
     private void playMusic(final String filenameToPlay) {
