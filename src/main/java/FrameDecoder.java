@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -94,7 +93,7 @@ public class FrameDecoder extends JFrame {
 
             solveButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    // String backfilename = "1.wav";
+                    // TODO вот это нужно перенести в отдельный поток, тогда интерфейс будет доступен для работы
                     Test backtest = new Test();
                     backtest.readWav(absolutePathToAudioFile);
                     Integer last = absolutePathToAudioFile.lastIndexOf(".");
@@ -118,11 +117,10 @@ public class FrameDecoder extends JFrame {
 
                         Integer startNew = newEndName.lastIndexOf("/");
                         String oneNameNewAufio = newEndName.substring(startNew + 1);
-                        String NewNameFile = oneNameNewAufio;
 
                         endText.setText("Дешифрование завершено!");
                         endText1.setText("Извлеченный текстовый файл:");
-                        endText2.setText(NewNameFile);
+                        endText2.setText(oneNameNewAufio);
                     } catch (Exception error) {
                         System.out.println(error);
                         System.out.println("Ошибка при чтении в TextReader");

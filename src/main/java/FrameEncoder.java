@@ -69,7 +69,7 @@ public class FrameEncoder extends JFrame {
         textButton.setLocation(40, 190);
         panel.add(textButton);
 
-        JButton musicStartPlay = new JButton(new ImageIcon("1.png"));
+        JButton musicStartPlay = new JButton(new ImageIcon("static/playButtonImage.png"));
         musicStartPlay.setSize(50, 50);
         musicStartPlay.setLocation(250, 99);
         panel.add(musicStartPlay);
@@ -84,13 +84,13 @@ public class FrameEncoder extends JFrame {
         solveButton.setLocation(300, 300);
         panel.add(solveButton);
 
-        final JButton musicEndStartPlay = new JButton(new ImageIcon("1.png"));
+        final JButton musicEndStartPlay = new JButton(new ImageIcon("static/playButtonImage.png"));
         musicEndStartPlay.setSize(50, 50);
         musicEndStartPlay.setLocation(620, 200);
         panel.add(musicEndStartPlay);
 
         final JLabel loaderImageLabel = new JLabel("", SwingConstants.RIGHT);
-        ImageIcon ii = new ImageIcon("load.gif");
+        ImageIcon ii = new ImageIcon("static/load.gif");
         loaderImageLabel.setIcon(ii);
         loaderImageLabel.setSize(200, 200);
         loaderImageLabel.setLocation(400, 70);
