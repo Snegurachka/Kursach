@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by elena on 28.11.15.
@@ -85,7 +84,7 @@ public class FrameEncoder extends JFrame {
         solveButton.setLocation(300, 300);
         panel.add(solveButton);
 
-        JButton musicEndStartPlay = new JButton(new ImageIcon("1.png"));
+        final JButton musicEndStartPlay = new JButton(new ImageIcon("1.png"));
         musicEndStartPlay.setSize(50, 50);
         musicEndStartPlay.setLocation(620, 200);
         panel.add(musicEndStartPlay);
@@ -120,6 +119,7 @@ public class FrameEncoder extends JFrame {
             }
         });
 
+        musicEndStartPlay.setVisible(false);
         musicEndStartPlay.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 playMusic(newEndName);
@@ -128,53 +128,59 @@ public class FrameEncoder extends JFrame {
 
         solveButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Test test = new Test();
-                test.readWav(absolutePathToAudioFile);
-                List<List<Long>> list = test.getBytes();
-                List<Long> testMusic = list.get(0);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Test test = new Test();
+                        test.readWav(absolutePathToAudioFile);
+                        java.util.List<java.util.List<Long>> list = test.getBytes();
+                        java.util.List<Long> testMusic = list.get(0);
 
-                TextReader textreader = new TextReader();
-                try {
-                    List<Integer> testText;
-                    testText = textreader.readFile(absolutePathToTextFile);
-                    Integer last = absolutePathToAudioFile.lastIndexOf(".");
-                    String newName = absolutePathToAudioFile.substring(0, last);
-                    newEndName = newName + "_1.wav";
-                    Analizator analizator = new Analizator();
-                    analizator.analize(testMusic, testText);
-                    List<Long> endVector = analizator.getEndList();
-                    Integer startSegment = analizator.getStartSegment();
-                    Integer textSize = analizator.getTextSize();
+                        TextReader textreader = new TextReader();
+                        try {
+                            java.util.List<Integer> testText;
+                            testText = textreader.readFile(absolutePathToTextFile);
+                            Integer last = absolutePathToAudioFile.lastIndexOf(".");
+                            String newName = absolutePathToAudioFile.substring(0, last);
+                            newEndName = newName + "_1.wav";
+                            Analizator analizator = new Analizator();
+                            analizator.analize(testMusic, testText);
+                            java.util.List<Long> endVector = analizator.getEndList();
+                            Integer startSegment = analizator.getStartSegment();
+                            Integer textSize = analizator.getTextSize();
 
 //                  преобразование в один массив
-                    List<List<Long>> endMusic = new ArrayList<List<Long>>();
-                    List<Long> endOneMusic1 = new ArrayList<Long>();
-                    List<Long> endOneMusic2 = new ArrayList<Long>();
-                    for (int i = 0; i < list.get(1).size(); ++i) {
-                        if (i < endVector.size()) {
-                            endOneMusic1.add(endVector.get(i));
-                            endOneMusic2.add(list.get(1).get(i));
-                        } else {
-                            endOneMusic1.add((long) 0);
-                            endOneMusic2.add(list.get(1).get(i));
+                            java.util.List<java.util.List<Long>> endMusic = new ArrayList<java.util.List<Long>>();
+                            java.util.List<Long> endOneMusic1 = new ArrayList<Long>();
+                            java.util.List<Long> endOneMusic2 = new ArrayList<Long>();
+                            for (int i = 0; i < list.get(1).size(); ++i) {
+                                if (i < endVector.size()) {
+                                    endOneMusic1.add(endVector.get(i));
+                                    endOneMusic2.add(list.get(1).get(i));
+                                } else {
+                                    endOneMusic1.add((long) 0);
+                                    endOneMusic2.add(list.get(1).get(i));
+                                }
+                            }
+                            endMusic.add(endOneMusic1);
+                            endMusic.add(endOneMusic2);
+
+                            test.modificationBytes(endMusic);
+                            test.writeWav(newEndName);
+                            Integer lastNew = newEndName.lastIndexOf("/");
+                            String oneNameNewAufio = newEndName.substring(lastNew + 1);
+
+                            endText.setText("Выполнено успешно!");
+                            endText1.setText("Размер текста: " + textSize);
+                            endText2.setText("Номер сегмента: " + startSegment);
+                            musicEndName.setText(oneNameNewAufio);
+                            musicEndStartPlay.setVisible(true);
+                        } catch (Exception error) {
+                            System.out.println(error);
+                            System.out.println("Ошибка при чтении в TextReader");
                         }
                     }
-                    endMusic.add(endOneMusic1);
-                    endMusic.add(endOneMusic2);
-
-                    test.modificationBytes(endMusic);
-                    test.writeWav(newEndName);
-                    Integer lastNew = newEndName.lastIndexOf("/");
-                    String oneNameNewAufio = newEndName.substring(lastNew + 1);
-
-                    endText.setText("Выполнено успешно!");
-                    endText1.setText("Размер текста: " + textSize);
-                    endText2.setText("Номер сегмента: " + startSegment);
-                    musicEndName.setText(oneNameNewAufio);
-                } catch (Exception error) {
-                    System.out.println(error);
-                    System.out.println("Ошибка при чтении в TextReader");
-                }
+                }).start();
             }
         });
         getContentPane().add(panel);
