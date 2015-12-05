@@ -89,6 +89,14 @@ public class FrameEncoder extends JFrame {
         musicEndStartPlay.setLocation(620, 200);
         panel.add(musicEndStartPlay);
 
+        final JLabel loaderImageLabel = new JLabel("", SwingConstants.RIGHT);
+        ImageIcon ii = new ImageIcon("load.gif");
+        loaderImageLabel.setIcon(ii);
+        loaderImageLabel.setSize(200, 200);
+        loaderImageLabel.setLocation(400, 70);
+        panel.add(loaderImageLabel);
+        loaderImageLabel.setVisible(false);
+
         audioButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 JFileChooser fileopen = new JFileChooser();
@@ -128,6 +136,7 @@ public class FrameEncoder extends JFrame {
 
         solveButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                loaderImageLabel.setVisible(true);
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -174,6 +183,7 @@ public class FrameEncoder extends JFrame {
                             endText1.setText("Размер текста: " + textSize);
                             endText2.setText("Номер сегмента: " + startSegment);
                             musicEndName.setText(oneNameNewAufio);
+                            loaderImageLabel.setVisible(false);
                             musicEndStartPlay.setVisible(true);
                         } catch (Exception error) {
                             System.out.println(error);
