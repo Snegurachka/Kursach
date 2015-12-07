@@ -12,12 +12,12 @@ import java.util.List;
  * Created by elena on 05.12.15.
  */
 public class FrameDecoder extends JFrame {
-        public static final int DEFAULT_WIDTH = 300;
-        public static final int DEFAULT_HEIGHT = 200;
+    public static final int DEFAULT_WIDTH = 300;
+    public static final int DEFAULT_HEIGHT = 200;
 
-        private String absolutePathToAudioFile;
-        private Integer startSegment;
-        private Integer textSize;
+    private String absolutePathToAudioFile = null;
+    private Integer startSegment = -1;
+    private Integer textSize = -1;
 
         public FrameDecoder() {
             // setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -79,6 +79,14 @@ public class FrameDecoder extends JFrame {
             solveButton.setLocation(300, 300);
             panel.add(solveButton);
 
+            final JLabel loaderImageLabel = new JLabel("", SwingConstants.RIGHT);
+            ImageIcon ii = new ImageIcon("static/load.gif");
+            loaderImageLabel.setIcon(ii);
+            loaderImageLabel.setSize(200, 200);
+            loaderImageLabel.setLocation(400, 70);
+            panel.add(loaderImageLabel);
+            loaderImageLabel.setVisible(false);
+
             audioButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     JFileChooser fileopen = new JFileChooser();
@@ -93,37 +101,56 @@ public class FrameDecoder extends JFrame {
 
             solveButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    // TODO вот это нужно перенести в отдельный поток, тогда интерфейс будет доступен для работы
-                    Test backtest = new Test();
-                    backtest.readWav(absolutePathToAudioFile);
-                    Integer last = absolutePathToAudioFile.lastIndexOf(".");
-                    String newName = absolutePathToAudioFile.substring(0, last);
-                    String newEndName = newName + "_result_text.txt";
-                    List<List<Long>> backlist = backtest.getBytes();
-                    List<Long> backTestMusic = backlist.get(0);
-                    Analizator analizator = new Analizator();
-                    textSize = Integer.parseInt(sizeTextWindow.getText());
-                    startSegment = Integer.parseInt(startSegmentWindow.getText());
-                    analizator.backAnalize(backTestMusic, textSize, startSegment);
-                    List<Integer> text = analizator.getText();
                     try {
-                        PrintWriter out = new PrintWriter(newEndName);
-                        for (int i = 0; i < text.size(); ++i) {
-                            int a = text.get(i);
-                            char b = (char) a;
-                            out.print(b);
-                        }
-                        out.close();
+                        textSize = Integer.parseInt(sizeTextWindow.getText());
+                        startSegment = Integer.parseInt(startSegmentWindow.getText());
+                    } catch (Exception exc) {
+                        textSize = -1;
+                        startSegment = -1;
+                    }
+                    if (absolutePathToAudioFile != null && startSegment >= 0 && textSize >= 0) {
+                        endText1.setText("");
+                        endText2.setText("");
+                        loaderImageLabel.setVisible(true);
+                        new Thread(new Runnable() {
+                            public void run() {
+                                Test backtest = new Test();
+                                backtest.readWav(absolutePathToAudioFile);
+                                Integer last = absolutePathToAudioFile.lastIndexOf(".");
+                                String newName = absolutePathToAudioFile.substring(0, last);
+                                String newEndName = newName + "_result_text.txt";
+                                List<List<Long>> backlist = backtest.getBytes();
+                                List<Long> backTestMusic = backlist.get(0);
+                                Analizator analizator = new Analizator();
 
-                        Integer startNew = newEndName.lastIndexOf("/");
-                        String oneNameNewAufio = newEndName.substring(startNew + 1);
+                                analizator.backAnalize(backTestMusic, textSize, startSegment);
+                                List<Integer> text = analizator.getText();
+                                try {
+                                    PrintWriter out = new PrintWriter(newEndName);
+                                    for (int i = 0; i < text.size(); ++i) {
+                                        int a = text.get(i);
+                                        char b = (char) a;
+                                        out.print(b);
+                                    }
+                                    out.close();
 
-                        endText.setText("Дешифрование завершено!");
-                        endText1.setText("Извлеченный текстовый файл:");
-                        endText2.setText(oneNameNewAufio);
-                    } catch (Exception error) {
-                        System.out.println(error);
-                        System.out.println("Ошибка при чтении в TextReader");
+                                    Integer startNew = newEndName.lastIndexOf("/");
+                                    String oneNameNewAufio = newEndName.substring(startNew + 1);
+
+                                    loaderImageLabel.setVisible(false);
+                                    endText.setText("Дешифрование завершено!");
+                                    endText1.setText("Извлеченный текстовый файл:");
+                                    endText2.setText(oneNameNewAufio);
+
+                                } catch (Exception error) {
+                                    System.out.println(error);
+                                    System.out.println("Ошибка при чтении в TextReader");
+                                }
+                            }
+                        }).start();
+                    } else {
+                        endText1.setText("Вы не ввели исходные данные");
+                        endText2.setText("Введите исходные данные");
                     }
                 }
             });

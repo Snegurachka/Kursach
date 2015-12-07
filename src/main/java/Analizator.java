@@ -48,7 +48,7 @@ public class Analizator {
         int K = (int) Math.pow(2.0, (double) v + 1);
 
         List<Complex[]> endMass = razbienie(music, K);
-//        printMas(endMass, 237);
+//        printMas(endMass, 291);
 
 // получение номера сегмента с которого нужно начинать запись
          startSegment = nomerSegmenta(endMass);
@@ -63,19 +63,28 @@ public class Analizator {
 
         // получение амплитуд
         List<List<Double>> amplitudesList = creationAmplitudes(fEndMass);
-//        System.out.println(amplitudesList.get(30));
+//        System.out.print(amplitudesList.get(291));
 
         // получение фаз
         List<List<Double>> phaseList = creationPhase(fEndMass);
-//        printList(phaseList, 30);
+//        printList(phaseList, 0);
+//        printList(phaseList, 1);
+//        printList(phaseList, 2);
+//        System.out.println();
 
         //получение разниц раз
         List<List<Double>> differencePhaseList = creationDifferencePhaseList(phaseList, startSegment);
 //        printList(differencePhaseList, 0);
+//        printList(differencePhaseList, 1);
+//        printList(differencePhaseList, 2);
+//        System.out.println();
+
 
         //кодирование информации получение новых фаз
         List<List<Double>> conversionPhase = conversionNewPhase(phaseList, differencePhaseList, textMass, startSegment);
-//        printList(conversionPhase, 30);
+//        printList(conversionPhase, 0);
+//        printList(conversionPhase, 1);
+//        printList(conversionPhase, 2);
 
         //обратное преобразование из амплитуд и фаз в массив комплексные числа
         List<Complex[]> endComplexList = endComplexList(amplitudesList, conversionPhase);
@@ -116,15 +125,31 @@ public class Analizator {
     //разбиение на сегменты массива аудио
     public List<Complex[]> razbienie(List<Long> music, Integer K) {
 
-        int N = (int) Math.ceil(music.size() / K); // количество сегментов
-        double Nn = music.size() / K;
+        int N = (int) Math.ceil(music.size() / (double) K); // количество сегментов
+        double Nn = music.size() / (double) K;
+        System.out.println(music.size());
+//        System.out.println(K);
+//        System.out.println(N);
+//        System.out.println(Nn);
+//        System.out.println(N*K);
+
+        List<Double> music1 = new ArrayList<Double>();
+        for ( int i = 0; i < N * K; i++){
+            if (i < music.size() - 1){
+                music1.add((double) music.get(i));
+            } else {
+                music1.add(0.0);
+            }
+        }
+//        System.out.println();
+//        System.out.println(music1.size());
 
         List<Complex[]> mass = new ArrayList<Complex[]>();
         for (int i = 0; i < N; i++) {
             Complex[] massSegment = new Complex[K];
             for (int k = 0; k < K; k++) {
                 massSegment[k] = new Complex(k, 0);
-                massSegment[k] = new Complex(music.get(i * K + k), 0);
+                massSegment[k] = new Complex(music1.get(i * K + k), 0);
             }
             mass.add(massSegment);
         }
@@ -145,6 +170,28 @@ public class Analizator {
         int count = 0;
         for (Complex el : List) {
             if (el.re() == 0.0) {
+                count ++;
+                if (count > 10){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public Integer nomerSegmenta1(List<List<Double>> phaseList) {
+        int i = 0;
+        while (!isCorrect1(phaseList.get(i))) {
+            ++i;
+        }
+//        System.out.println(i);
+        return i;
+    }
+
+    public boolean isCorrect1(List<Double> List) {
+        int count = 0;
+        for (Double el : List) {
+            if (el == 0.0) {
                 count ++;
                 if (count > 10){
                     return false;
