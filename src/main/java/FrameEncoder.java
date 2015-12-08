@@ -89,12 +89,12 @@ public class FrameEncoder extends JFrame {
         musicEndStartPlay.setLocation(600, 200);
         panel.add(musicEndStartPlay);
 
-        final JButton musicStopPlay = new JButton(new ImageIcon("static/playButtonImage.png"));
+        final JButton musicStopPlay = new JButton(new ImageIcon("static/stoop2.png"));
         musicStopPlay.setSize(50, 50);
         musicStopPlay.setLocation(300, 99);
         panel.add(musicStopPlay);
 
-        final JButton musicEndStopPlay = new JButton(new ImageIcon("static/playButtonImage.png"));
+        final JButton musicEndStopPlay = new JButton(new ImageIcon("static/stoop2.png"));
         musicEndStopPlay.setSize(50, 50);
         musicEndStopPlay.setLocation(650, 200);
         panel.add(musicEndStopPlay);
@@ -219,6 +219,7 @@ public class FrameEncoder extends JFrame {
                                 loaderImageLabel.setVisible(false);
                                 musicEndStartPlay.setVisible(true);
                                 musicEndStopPlay.setVisible(true);
+                                new Gnuplot(analizator).printAll();
                             } catch (Exception error) {
                                 System.out.println(error);
                                 System.out.println("Ошибка при чтении в TextReader");

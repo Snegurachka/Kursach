@@ -1,5 +1,11 @@
+import wav.Test;
+import java.util.List;
+
 import javax.swing.*;
 import java.awt.*;
+
+import java.io.PrintWriter;
+import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) throws Exception {
@@ -10,7 +16,7 @@ public class Main {
 //        List<List<Long>> list = test.getBytes();
 //        List<Long> testMusic = list.get(0);
 //
-//        String textName = "testkurs.txt";
+//        String textName = "text.txt";
 //        TextReader textreader = new TextReader();
 //        List<Integer> testText;
 //        testText = textreader.readFile(textName);
@@ -21,13 +27,14 @@ public class Main {
 //        Integer startSegment = analizator.getStartSegment();
 //        Integer textSize = analizator.getTextSize();
 //
+////        System.out.println(list.get(1).size());
 //
 ////      преобразование в один массив
 //        List<List<Long>> endMusic = new ArrayList<List<Long>>();
 //        List<Long> endOneMusic1 = new ArrayList<Long>();
 //        List<Long> endOneMusic2 = new ArrayList<Long>();
-//        for (int i = 0; i < list.get(1).size(); ++i){
-//            if (i < endVector.size()){
+//        for (int i = 0; i < list.get(1).size(); ++i) {
+//            if (i < endVector.size()) {
 //                endOneMusic1.add(endVector.get(i));
 //                endOneMusic2.add(list.get(1).get(i));
 //            } else {
@@ -44,7 +51,7 @@ public class Main {
 //        String filename2 = "1.wav";
 //        Music test1 = new Music();
 //        test1.testPlay(filename2);
-//////
+////
 ////        ----------------------------------------
 //
 //        String backfilename = "1.wav";
@@ -56,16 +63,27 @@ public class Main {
 ////        Analizator analizator = new Analizator();
 //        analizator.backAnalize(backTestMusic, textSize, startSegment);
 //        List<Integer> text = analizator.getText();
+//        new Gnuplot(analizator).printAll();
 //
 //        PrintWriter out = new PrintWriter("resulttext.txt");
 //
-//        for (int i = 0; i < text.size(); ++i){
+//        for (int i = 0; i < text.size(); ++i) {
 //            int a = text.get(i);
 //            char b = (char) a;
 //            out.print(b);
 //        }
 //
 //        out.close();
+
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                SimpleFrame frame = new SimpleFrame();
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setVisible(true);
+            }
+        });
+    }
+}
 
 
 //        System.out.println();
@@ -125,14 +143,6 @@ public class Main {
 //        System.out.println("OK");
 
 
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                SimpleFrame frame = new SimpleFrame();
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.setVisible(true);
-            }
-        });
-
 
 
 
@@ -177,8 +187,6 @@ public class Main {
 //        }
 
 
-
-
 //        analizator.backAnalize(endVector, N);
 //        Vector <Integer> text = analizator.getText();
 //
@@ -194,5 +202,4 @@ public class Main {
 
         // Слушаешь музыку
         //test.testPlay(filename);
-    }
-}
+

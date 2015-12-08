@@ -7,9 +7,14 @@ import java.util.List;
 public class Analizator {
 
     private List<Long> endList;
+    private List<Long> startList = new ArrayList<Long>();
     private Integer startSegment;
     private List<Integer> text;
     private Integer textSize;
+
+    public List<Long> getStartList() {
+        return startList;
+    }
 
     public Integer getTextSize() {return textSize;}
 
@@ -39,6 +44,11 @@ public class Analizator {
 
     public void analize(List<Long> music, List<Integer> text) {
 
+        for (int i = 0; i < music.size(); ++i){
+            startList.add(music.get(i));
+        }
+        System.out.println(startList.size());
+
         List<Boolean> textMass = textConversion(text);
 
         textSize = text.size();
@@ -52,7 +62,8 @@ public class Analizator {
 
 // получение номера сегмента с которого нужно начинать запись
          startSegment = nomerSegmenta(endMass);
-//       System.out.println(startSegment);
+//        startSegment = 0;
+       System.out.println(startSegment);
 
         List<Complex[]> fEndMass = creationFFTorIFFT(endMass, true, 0, endMass.size());
 //        printMas(fEndMass, 30);
@@ -67,32 +78,46 @@ public class Analizator {
 
         // получение фаз
         List<List<Double>> phaseList = creationPhase(fEndMass);
-//        printList(phaseList, 0);
-//        printList(phaseList, 1);
 //        printList(phaseList, 2);
-//        System.out.println();
 
         //получение разниц раз
         List<List<Double>> differencePhaseList = creationDifferencePhaseList(phaseList, startSegment);
-//        printList(differencePhaseList, 0);
-//        printList(differencePhaseList, 1);
-//        printList(differencePhaseList, 2);
-//        System.out.println();
+//        printList(differencePhaseList, 3);
 
 
         //кодирование информации получение новых фаз
         List<List<Double>> conversionPhase = conversionNewPhase(phaseList, differencePhaseList, textMass, startSegment);
-//        printList(conversionPhase, 0);
-//        printList(conversionPhase, 1);
 //        printList(conversionPhase, 2);
 
+        List<List<Double>> ph = new ArrayList<List<Double>>();
+        for ( int i = 0; i < conversionPhase.size(); ++i){
+            List<Double> onePh = new ArrayList<Double>();
+            for ( int k = 0; k < conversionPhase.get(i).size(); ++k) {
+                if (i <= startSegment) {
+                    onePh.add(conversionPhase.get(i).get(k));
+                }
+                if (i > startSegment) {
+                    onePh.add(conversionPhase.get(i - 1).get(k) + differencePhaseList.get(i).get(k));
+                }
+            }
+            ph.add(onePh);
+        }
+//        printList(ph, 2);
         //обратное преобразование из амплитуд и фаз в массив комплексные числа
-        List<Complex[]> endComplexList = endComplexList(amplitudesList, conversionPhase);
+        List<Complex[]> endComplexList = endComplexList(amplitudesList, ph);
 //        printMas(endComplexList, 237);
 
         // обратное преобразование Фурье
         List<Complex[]> ifftMass = creationFFTorIFFT(endComplexList, false, 0, endComplexList.size());
 //        printMas(ifftMass, 237);
+
+//        List<Complex[]> fEndMass2 = creationFFTorIFFT(ifftMass, true, 0, ifftMass.size());
+////      printMas(fEndMass2, 237);
+//
+//        // получение фаз
+//        List<List<Double>> phaseList2 = creationPhase(fEndMass2);
+//        printList(phaseList2, 2);
+
 
         //получение итогового массива
         endList = creationEnd(ifftMass);
@@ -127,7 +152,7 @@ public class Analizator {
 
         int N = (int) Math.ceil(music.size() / (double) K); // количество сегментов
         double Nn = music.size() / (double) K;
-        System.out.println(music.size());
+//        System.out.println(music.size());
 //        System.out.println(K);
 //        System.out.println(N);
 //        System.out.println(Nn);
@@ -242,16 +267,15 @@ public class Analizator {
         List<List<Double>> newPhase = new ArrayList<List<Double>>();
         int counter = 0;
 
-        for (int i = 0; i < nomer + 1; ++i){
-            List<Double> newPhaseOneSegment = new ArrayList<Double>();
-            for (int k = 0; k < phaseList.get(0).size(); ++k){
-                newPhaseOneSegment.add(phaseList.get(i).get(k));
+        for (int i = 0; i < phaseList.size(); ++i){
+            List<Double> newp = new ArrayList<Double>();
+            for ( int k = 0; k < phaseList.get(i).size(); ++k){
+                newp.add(phaseList.get(i).get(k));
             }
-            newPhase.add(newPhaseOneSegment);
+            newPhase.add(newp);
         }
-        List<Double> newPhaseOneSegment = new ArrayList<Double>();
-        for (int i = 0; i < phaseList.get(nomer).size(); ++i) {
 
+        for (int i = 0; i < phaseList.get(startSegment).size(); ++i) {
             if (counter < textMass.size()) {
                 if (i > 0 && i < (phaseList.get(nomer).size() - 1)) {
                     if (textMass.get(counter)) {
@@ -269,13 +293,42 @@ public class Analizator {
                 }
             }
         }
-        for (int i = nomer + 1; i < phaseList.size(); ++i){
-            List<Double> phasePhase = new ArrayList<Double>();
-            for (int k = 0; k < phaseList.get(i).size(); ++k){
-                phasePhase.add(newPhase.get(i - 1).get(k) + differencePhaseList.get(i).get(k));
-            }
-            newPhase.add(phasePhase);
-        }
+
+
+//        for (int i = 0; i < nomer + 1; ++i){
+//            List<Double> newPhaseOneSegment = new ArrayList<Double>();
+//            for (int k = 0; k < phaseList.get(0).size(); ++k){
+//                newPhaseOneSegment.add(phaseList.get(i).get(k));
+//            }
+//            newPhase.add(newPhaseOneSegment);
+//        }
+//        List<Double> newPhaseOneSegment = new ArrayList<Double>();
+//        for (int i = 0; i < phaseList.get(nomer).size(); ++i) {
+//
+//            if (counter < textMass.size()) {
+//                if (i > 0 && i < (phaseList.get(nomer).size() - 1)) {
+//                    if (textMass.get(counter)) {
+////                        newPhase.get(nomer).set(i, Math.PI / (-2));
+////                        newPhase.get(nomer).set((phaseList.get(nomer).size() / 2) + i, Math.PI / (-2));
+//                        newPhase.get(nomer).set((phaseList.get(nomer).size() - 1) - i, Math.PI / (-2));
+////                        newPhase.get(nomer).set(i + 1, Math.PI / (2));
+//                    } else {
+////                        newPhase.get(nomer).set(i, Math.PI / 2);
+////                        newPhase.get(nomer).set((phaseList.get(nomer).size() / 2) + i, Math.PI / 2);
+//                        newPhase.get(nomer).set((phaseList.get(nomer).size() - 1) - i, Math.PI / 2);
+////                        newPhase.get(nomer).set(i + 1, Math.PI / -2);
+//                    }
+//                    counter++;
+//                }
+//            }
+//        }
+//        for (int i = nomer + 1; i < phaseList.size(); ++i){
+//            List<Double> phasePhase = new ArrayList<Double>();
+//            for (int k = 0; k < phaseList.get(i).size(); ++k){
+//                phasePhase.add(newPhase.get(i - 1).get(k) + differencePhaseList.get(i).get(k));
+//            }
+//            newPhase.add(phasePhase);
+//        }
         return newPhase;
     }
 
