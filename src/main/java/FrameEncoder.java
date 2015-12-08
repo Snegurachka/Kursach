@@ -170,6 +170,7 @@ public class FrameEncoder extends JFrame {
                             test.readWav(absolutePathToAudioFile);
                             java.util.List<java.util.List<Long>> list = test.getBytes();
                             java.util.List<Long> testMusic = list.get(0);
+                            Gnuplot.printList("testMusic.gnuplot", testMusic);
 
 //                            System.out.println(list.get(0).size());
 //                            System.out.println(list.get(1).size());
@@ -182,6 +183,8 @@ public class FrameEncoder extends JFrame {
                                 Analizator analizator = new Analizator();
                                 analizator.analize(testMusic, testText);
                                 java.util.List<Long> endVector = analizator.getEndList();
+                                Gnuplot.printList("endVector.gnuplot", endVector);
+
                                 Integer startSegment = analizator.getStartSegment();
                                 Integer textSize = analizator.getTextSize();
                                 Integer last = absolutePathToAudioFile.lastIndexOf(".");
@@ -219,7 +222,6 @@ public class FrameEncoder extends JFrame {
                                 loaderImageLabel.setVisible(false);
                                 musicEndStartPlay.setVisible(true);
                                 musicEndStopPlay.setVisible(true);
-                                new Gnuplot(analizator).printAll();
                             } catch (Exception error) {
                                 System.out.println(error);
                                 System.out.println("Ошибка при чтении в TextReader");

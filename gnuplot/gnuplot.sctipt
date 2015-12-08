@@ -1,0 +1,6 @@
+set title 'Test'
+set grid
+set xlabel 'x'
+set ylabel 'y'
+plot 'testMusic.gnuplot' using 1:2 w l lw 1 title 'test'
+pause -1
