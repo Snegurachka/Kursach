@@ -1,87 +1,113 @@
 import wav.Test;
-import java.util.List;
 
+import java.io.File;
+import java.io.PrintWriter;
+import java.util.List;
 import javax.swing.*;
 import java.awt.*;
-
-import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) throws Exception {
 
-//        String filename = "Vagner.wav";
-//        Test test = new Test();
-//        test.readWav(filename);
-//        List<List<Long>> list = test.getBytes();
-//        List<Long> testMusic = list.get(0);
-//
-//        String textName = "text.txt";
-//        TextReader textreader = new TextReader();
-//        List<Integer> testText;
-//        testText = textreader.readFile(textName);
-//
-//        Analizator analizator = new Analizator();
-//        analizator.analize(testMusic, testText);
-//        List<Long> endVector = analizator.getEndList();
-//        Integer startSegment = analizator.getStartSegment();
-//        Integer textSize = analizator.getTextSize();
-//
-////        System.out.println(list.get(1).size());
-//
-////      преобразование в один массив
-//        List<List<Long>> endMusic = new ArrayList<List<Long>>();
-//        List<Long> endOneMusic1 = new ArrayList<Long>();
-//        List<Long> endOneMusic2 = new ArrayList<Long>();
-//        for (int i = 0; i < list.get(1).size(); ++i) {
-//            if (i < endVector.size()) {
-//                endOneMusic1.add(endVector.get(i));
-//                endOneMusic2.add(list.get(1).get(i));
-//            } else {
-//                endOneMusic1.add((long) 0);
-//                endOneMusic2.add(list.get(1).get(i));
-//            }
-//        }
-//        endMusic.add(endOneMusic1);
-//        endMusic.add(endOneMusic2);
-//////        ---------------------------------------
-//        test.modificationBytes(endMusic);
-//        test.writeWav("1.wav");
-//
-//        String filename2 = "1.wav";
-//        Music test1 = new Music();
-//        test1.testPlay(filename2);
-////
-////        ----------------------------------------
-//
-//        String backfilename = "1.wav";
-//        Test backtest = new Test();
-//        backtest.readWav(backfilename);
-//        List<List<Long>> backlist = backtest.getBytes();
-//        List<Long> backTestMusic = backlist.get(0);
-//
-////        Analizator analizator = new Analizator();
-//        analizator.backAnalize(backTestMusic, textSize, startSegment);
-//        List<Integer> text = analizator.getText();
-//        new Gnuplot(analizator).printAll();
-//
-//        PrintWriter out = new PrintWriter("resulttext.txt");
-//
-//        for (int i = 0; i < text.size(); ++i) {
-//            int a = text.get(i);
-//            char b = (char) a;
-//            out.print(b);
-//        }
-//
-//        out.close();
+//      получение массива текста
+        String musikName = "Vagner.wav";
+        Test test = new Test();
+        test.readWav(musikName);
+        List<List<Long>> list = test.getBytes();
+        List<Long> testMusic = list.get(0);
 
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                SimpleFrame frame = new SimpleFrame();
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.setVisible(true);
+//      получение массива текста
+        String textName = "text.txt";
+        TextReader textreader = new TextReader();
+        List<Integer> testText;
+        testText = textreader.readFile(textName);
+
+//      запись в аудио текста
+        Analizator analizator = new Analizator();
+        analizator.analize(testMusic, testText);
+        List<Long> endVector = analizator.getEndList();
+        Integer startSegment = analizator.getStartSegment();
+        Integer textSize = analizator.getTextSize();
+        Integer nomerElementa = analizator.getNomerElementa();
+        System.out.print("nomer:" + nomerElementa);
+
+
+//        System.out.println(list.get(1).size());
+
+//      преобразование в один массив
+        List<List<Long>> endMusic = new ArrayList<List<Long>>();
+        List<Long> endOneMusic1 = new ArrayList<Long>();
+        List<Long> endOneMusic2 = new ArrayList<Long>();
+        System.out.print("1 :");
+        System.out.println(endVector.size());
+        System.out.print("2 :");
+        System.out.println(list.get(1).size());
+
+        for (int i = nomerElementa; i < list.get(1).size(); i++){
+            endOneMusic2.add(list.get(1).get(i));
+        }
+
+        if (endOneMusic2.size() > endVector.size()){
+            for (int i = 0; i < endOneMusic2.size(); i++){
+                if (i < endVector.size()){
+                    endOneMusic1.add(endVector.get(i));
+                } else
+                    endOneMusic1.add((long) 0);
             }
-        });
+        } else {
+            for (int i = 0; i < endOneMusic2.size(); i++){
+                endOneMusic1.add(endVector.get(i));
+            }
+        }
+
+        System.out.print("1 :");
+        System.out.println(endOneMusic1.size());
+        System.out.print("2 :");
+        System.out.println(endOneMusic2.size());
+        endMusic.add(endOneMusic1);
+        endMusic.add(endOneMusic2);
+
+
+
+////        ---------------------------------------
+        test.modificationBytes(endMusic);
+        test.writeWav("1.wav");
+
+        String filename2 = "1.wav";
+        Music test1 = new Music();
+        test1.testPlay(filename2);
+//
+//        ----------------------------------------
+
+        String backfilename = "1.wav";
+        Test backtest = new Test();
+        backtest.readWav(backfilename);
+        List<List<Long>> backlist = backtest.getBytes();
+        List<Long> backTestMusic = backlist.get(0);
+
+//        Analizator analizator = new Analizator();
+        analizator.backAnalize(backTestMusic, textSize, startSegment);
+        List<Integer> text = analizator.getText();
+//        new Gnuplot(analizator).printAll();
+
+        PrintWriter out = new PrintWriter("resulttext.txt");
+
+        for (int i = 0; i < text.size(); ++i) {
+            int a = text.get(i);
+            char b = (char) a;
+            out.print(b);
+        }
+
+        out.close();
+
+//        EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                SimpleFrame frame = new SimpleFrame();
+//                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//                frame.setVisible(true);
+//            }
+//        });
     }
 }
 

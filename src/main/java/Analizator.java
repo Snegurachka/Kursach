@@ -11,22 +11,21 @@ public class Analizator {
     private Integer startSegment;
     private List<Integer> text;
     private Integer textSize;
+    private Integer segmentOneSize;
+    private Integer nomerElementa;
 
     public List<Long> getStartList() {
         return startList;
     }
-
-    public Integer getTextSize() {return textSize;}
-
+    public Integer getTextSize() { return textSize;}
     public List<Long> getEndList() {
         return endList;
     }
-
     public List<Integer> getText() {
         return text;
     }
-
     public Integer getStartSegment() { return startSegment;}
+    public Integer getNomerElementa() { return nomerElementa; }
 
     private void printMas(List<Complex[]> endMass, int num) {
         for(int i = 0; i < endMass.get(num).length; ++i){
@@ -42,33 +41,37 @@ public class Analizator {
         System.out.println();
     }
 
+
     public void analize(List<Long> music, List<Integer> text) {
 
         for (int i = 0; i < music.size(); ++i){
             startList.add(music.get(i));
         }
         System.out.println(startList.size());
-
+        textSize = text.size();
+//   представление массива текста в виде 0 и 1
         List<Boolean> textMass = textConversion(text);
 
-        textSize = text.size();
-        int sizeBitText = textSize * 8;
-        Double constant = 3.222;
-        int v = (int) Math.ceil((Math.log10((double) sizeBitText) * constant + 1));
-        int K = (int) Math.pow(2.0, (double) v + 1);
 
-        List<Complex[]> endMass = razbienie(music, K);
-//        printMas(endMass, 291);
+        List<Long> musikNot0 = newMass0(music);
+        System.out.println(musikNot0.size());
+        List<Complex[]> endMass = razbienie(musikNot0, textSize);
+//        printMas(endMass, 0);
 
-// получение номера сегмента с которого нужно начинать запись
-         startSegment = nomerSegmenta(endMass);
-//        startSegment = 0;
-       System.out.println(startSegment);
+//        разбиение на сегменты
+
+//        List<Complex[]> endMass = razbienie(music, textSize);
+//        printMas(endMass, 0);
+
+//        получение номера сегмента с которого нужно начинать запись
+//        startSegment = nomerSegmenta(endMass);
+        startSegment = 0;
+        System.out.println(startSegment);
 
         List<Complex[]> fEndMass = creationFFTorIFFT(endMass, true, 0, endMass.size());
 //        printMas(fEndMass, 30);
 
-        // обратное преобразование Фурье
+//        обратное преобразование Фурье
         List<Complex[]> ifftMass2 = creationFFTorIFFT(fEndMass, false, 0, fEndMass.size());
 //        printMas(ifftMass2, 3);
 
@@ -76,16 +79,15 @@ public class Analizator {
         List<List<Double>> amplitudesList = creationAmplitudes(fEndMass);
 //        System.out.print(amplitudesList.get(291));
 
-        // получение фаз
+//        получение фаз
         List<List<Double>> phaseList = creationPhase(fEndMass);
-//        printList(phaseList, 2);
+//        printList(phaseList, 12);
 
-        //получение разниц раз
+//        получение разниц
         List<List<Double>> differencePhaseList = creationDifferencePhaseList(phaseList, startSegment);
 //        printList(differencePhaseList, 3);
 
-
-        //кодирование информации получение новых фаз
+//        кодирование информации получение новых фаз
         List<List<Double>> conversionPhase = conversionNewPhase(phaseList, differencePhaseList, textMass, startSegment);
 //        printList(conversionPhase, 2);
 
@@ -118,45 +120,56 @@ public class Analizator {
 //        List<List<Double>> phaseList2 = creationPhase(fEndMass2);
 //        printList(phaseList2, 2);
 
-
         //получение итогового массива
         endList = creationEnd(ifftMass);
     }
+
+
 
     public void backAnalize (List<Long> music, Integer N, Integer nomer){
 
 //        text = new ArrayList<Integer>();
 //        разбиение на сегменты
         int sizeBitText = N * 8;
-        Double constant = 3.222;
-        int v = (int) Math.ceil((Math.log10((double) sizeBitText) * constant + 1));
-        int K = (int) Math.pow(2.0, (double) v + 1);
-        List<Complex[]> endMass2 = razbienie(music, K);
+
+        List<Complex[]> endMass2 = razbienie(music, N);
+
+
 //        printMas(endMass2, 237);
 
 //        БПФ
         List<Complex[]> fEndMass2 = creationFFTorIFFT(endMass2, true, 0, endMass2.size());
 //      printMas(fEndMass2, 237);
 
-        // получение фаз
+//        получение фаз
         List<List<Double>> phaseList2 = creationPhase(fEndMass2);
 //        printList(phaseList2, 30);
 
-        //получение кодированного сообщения
+//        получение кодированного сообщения
         text = poluchenieTexta (phaseList2, sizeBitText, nomer);
 //        System.out.print(text);
     }
 
-    //разбиение на сегменты массива аудио
-    public List<Complex[]> razbienie(List<Long> music, Integer K) {
 
+
+
+
+
+
+
+//    разбиение на сегменты массива аудио
+    public List<Complex[]> razbienie(List<Long> music, Integer Nnn) {
+
+        int sizeBitText = Nnn * 8;
+        Double constant = 3.222;
+        int v = (int) Math.ceil((Math.log10((double) sizeBitText) * constant + 1));
+        int K = (int) Math.pow(2.0, (double) v + 1);
         int N = (int) Math.ceil(music.size() / (double) K); // количество сегментов
+        System.out.println(N);
         double Nn = music.size() / (double) K;
+        segmentOneSize = music.size() / N;
+//        System.out.println(segmentOneSize);
 //        System.out.println(music.size());
-//        System.out.println(K);
-//        System.out.println(N);
-//        System.out.println(Nn);
-//        System.out.println(N*K);
 
         List<Double> music1 = new ArrayList<Double>();
         for ( int i = 0; i < N * K; i++){
@@ -182,6 +195,28 @@ public class Analizator {
         return mass;
     }
 
+//    получние массива без 0
+    public List<Long> newMass0 (List<Long> musicM){
+        List<Long> newMas = new ArrayList<Long>();
+        int count = 0;
+        for (int i = 0; i < musicM.size(); i++){
+            if (musicM.get(i) == 0.0){
+                count = 0;
+            } else {
+                count++;
+                if (count >= 7) {
+                    nomerElementa = i;
+                    break;
+                }
+            }
+        }
+        for (int i = (nomerElementa - 6); i < musicM.size(); i++){
+            newMas.add(musicM.get(i));
+        }
+        return newMas;
+    }
+
+//    получение номера сегмента
     public Integer nomerSegmenta(List<Complex[]> phaseList) {
         int i = 0;
         while (!isCorrect(phaseList.get(i))) {
@@ -190,13 +225,12 @@ public class Analizator {
 //        System.out.println(i);
         return i;
     }
-
     public boolean isCorrect(Complex[] List) {
         int count = 0;
         for (Complex el : List) {
             if (el.re() == 0.0) {
                 count ++;
-                if (count > 10){
+                if (count > (segmentOneSize / 2)){
                     return false;
                 }
             }
@@ -204,31 +238,28 @@ public class Analizator {
         return true;
     }
 
-    public Integer nomerSegmenta1(List<List<Double>> phaseList) {
-        int i = 0;
-        while (!isCorrect1(phaseList.get(i))) {
-            ++i;
-        }
-//        System.out.println(i);
-        return i;
-    }
+//    public Integer nomerSegmenta1(List<List<Double>> phaseList) {
+//        int i = 0;
+//        while (!isCorrect1(phaseList.get(i))) {
+//            ++i;
+//        }
+////        System.out.println(i);
+//        return i;
+//    }
+//
+//    public boolean isCorrect1(List<Double> List) {
+//        int count = 0;
+//        for (Double el : List) {
+//            if (el == 0.0) {
+//                count ++;
+//                if (count > 10){
+//                    return false;
+//                }
+//            }
+//        }
+//        return true;
+//    }
 
-    public boolean isCorrect1(List<Double> List) {
-        int count = 0;
-        for (Double el : List) {
-            if (el == 0.0) {
-                count ++;
-                if (count > 10){
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    public Complex complex(Double amplitude, Double phase) {
-        return new Complex(amplitude * Math.cos(phase), amplitude * Math.sin(phase));
-    }
 
     public List<Complex[]> endComplexList(List<List<Double>> amplitudeList, List<List<Double>> phase) {
         List<Complex[]> endCoplexList = new ArrayList<Complex[]>();
@@ -242,6 +273,12 @@ public class Analizator {
         return endCoplexList;
     }
 
+    //    преобразование из амплитуды и фазы в комплексное число
+    public Complex complex(Double amplitude, Double phase) {
+        return new Complex(amplitude * Math.cos(phase), amplitude * Math.sin(phase));
+    }
+
+//    представление массива текста в виде 0 и 1
     public List<Boolean> textConversion(List<Integer> text) {
         List<Boolean> bool = new ArrayList<Boolean>();
 
@@ -357,6 +394,7 @@ public class Analizator {
         }
         return phaseList;
     }
+
 //  получение разниц фаз
     public List<List<Double>> creationDifferencePhaseList (List<List<Double>> phaseList, Integer nomer){
         List<List<Double>> differencePhaseList = new ArrayList<List<Double>>();
