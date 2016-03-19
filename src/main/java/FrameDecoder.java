@@ -123,7 +123,7 @@ public class FrameDecoder extends JFrame {
                                 List<Long> backTestMusic = backlist.get(0);
                                 Analizator analizator = new Analizator();
 
-                                analizator.backAnalize(backTestMusic, textSize, startSegment);
+                                analizator.backAnalize(backTestMusic, textSize);
                                 List<Integer> text = analizator.getText();
                                 try {
                                     PrintWriter out = new PrintWriter(newEndName);

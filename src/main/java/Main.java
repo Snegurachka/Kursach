@@ -1,16 +1,16 @@
 import wav.Test;
-
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
-import javax.swing.*;
-import java.awt.*;
 import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) throws Exception {
 
-//      получение массива текста
+//      получение массива аудио
         String musikName = "Vagner.wav";
         Test test = new Test();
         test.readWav(musikName);
@@ -18,19 +18,51 @@ public class Main {
         List<Long> testMusic = list.get(0);
 
 //      получение массива текста
-        String textName = "text.txt";
-        TextReader textreader = new TextReader();
-        List<Integer> testText;
-        testText = textreader.readFile(textName);
+//        String textName = "text.txt";
+//        TextReader textreader = new TextReader();
+//        List<Integer> testText;
+//        testText = textreader.readFile(textName);
+//        System.out.println(testText);
+
+//        получение массива изображения
+        byte[] bytesFromFile = null;
+        String filename = "imagetest.png";
+        List <Integer> listImage = new ArrayList<Integer>();
+        try {
+            // Получение массива байт из картинки
+            bytesFromFile = Files.readAllBytes(Paths.get(filename));
+
+            // Вывод в консоль массива байт, если убрать "(char)", то увидишь просто поток цифр.
+            // В консоли картинки ты никак не получишь.
+
+            for (int i = 0; i < bytesFromFile.length; ++i) {
+//                System.out.print(bytesFromFile[i]);
+//                System.out.print(" ");
+                listImage.add((int)bytesFromFile[i]);
+            }
+//            System.out.println();
+//            System.out.println(listImage);
+
+            // Запись в НОВЫЙ файл путь до которого someFile.png
+            final FileOutputStream fos = new FileOutputStream(new File("someFile.png"));
+            for (Integer num : listImage) {
+                fos.write(num);
+            }
+//            fos.write(bytesFromFile);
+            fos.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 //      запись в аудио текста
         Analizator analizator = new Analizator();
-        analizator.analize(testMusic, testText);
+//        analizator.analize(testMusic, testText);
+        analizator.analize(testMusic, listImage);
+
         List<Long> endVector = analizator.getEndList();
-        Integer startSegment = analizator.getStartSegment();
         Integer textSize = analizator.getTextSize();
         Integer nomerElementa = analizator.getNomerElementa();
-        System.out.print("nomer:" + nomerElementa);
+//        System.out.print("nomer:" + nomerElementa);
 
 
 //        System.out.println(list.get(1).size());
@@ -39,10 +71,10 @@ public class Main {
         List<List<Long>> endMusic = new ArrayList<List<Long>>();
         List<Long> endOneMusic1 = new ArrayList<Long>();
         List<Long> endOneMusic2 = new ArrayList<Long>();
-        System.out.print("1 :");
-        System.out.println(endVector.size());
-        System.out.print("2 :");
-        System.out.println(list.get(1).size());
+//        System.out.print("1 :");
+//        System.out.println(endVector.size());
+//        System.out.print("2 :");
+//        System.out.println(list.get(1).size());
 
         for (int i = nomerElementa; i < list.get(1).size(); i++){
             endOneMusic2.add(list.get(1).get(i));
@@ -61,10 +93,10 @@ public class Main {
             }
         }
 
-        System.out.print("1 :");
-        System.out.println(endOneMusic1.size());
-        System.out.print("2 :");
-        System.out.println(endOneMusic2.size());
+//        System.out.print("1 :");
+//        System.out.println(endOneMusic1.size());
+//        System.out.print("2 :");
+//        System.out.println(endOneMusic2.size());
         endMusic.add(endOneMusic1);
         endMusic.add(endOneMusic2);
 
@@ -87,19 +119,34 @@ public class Main {
         List<Long> backTestMusic = backlist.get(0);
 
 //        Analizator analizator = new Analizator();
-        analizator.backAnalize(backTestMusic, textSize, startSegment);
+        analizator.backAnalize(backTestMusic, textSize);
         List<Integer> text = analizator.getText();
+//        System.out.println();
+//        System.out.println(text);
 //        new Gnuplot(analizator).printAll();
 
-        PrintWriter out = new PrintWriter("resulttext.txt");
+        try {
 
-        for (int i = 0; i < text.size(); ++i) {
-            int a = text.get(i);
-            char b = (char) a;
-            out.print(b);
+            // Запись в НОВЫЙ файл путь до которого someFile.png
+            final FileOutputStream fos = new FileOutputStream(new File("someFile.png"));
+            for (Integer num : text) {
+                fos.write(num);
+            }
+//            fos.write(bytesFromFile);
+            fos.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-        out.close();
+//        PrintWriter out = new PrintWriter("resulttext.txt");
+//
+//        for (int i = 0; i < text.size(); ++i) {
+//            int a = text.get(i);
+//            char b = (char) a;
+//            out.print(b);
+//        }
+//
+//        out.close();
 
 //        EventQueue.invokeLater(new Runnable() {
 //            public void run() {

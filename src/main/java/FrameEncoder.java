@@ -185,11 +185,10 @@ public class FrameEncoder extends JFrame {
                                 java.util.List<Long> endVector = analizator.getEndList();
                                 Gnuplot.printList("endVector.gnuplot", endVector);
 
-                                Integer startSegment = analizator.getStartSegment();
                                 Integer textSize = analizator.getTextSize();
                                 Integer last = absolutePathToAudioFile.lastIndexOf(".");
                                 String newName = absolutePathToAudioFile.substring(0, last);
-                                newEndName = newName + "_" + textSize + "_" + startSegment + ".wav";
+                                newEndName = newName + "_" + textSize + "_" + ".wav";
 //                              преобразование в один массив
                                 java.util.List<java.util.List<Long>> endMusic = new ArrayList<java.util.List<Long>>();
                                 System.out.println(endVector.size());
@@ -217,7 +216,6 @@ public class FrameEncoder extends JFrame {
 
                                 endText.setText("Выполнено успешно!");
                                 endText1.setText("Размер текста: " + textSize);
-                                endText2.setText("Номер сегмента: " + startSegment);
                                 musicEndName.setText(oneNameNewAufio);
                                 loaderImageLabel.setVisible(false);
                                 musicEndStartPlay.setVisible(true);
