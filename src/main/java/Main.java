@@ -18,11 +18,11 @@ public class Main {
         List<Long> testMusic = list.get(0);
 
 //      получение массива текста
-//        String textName = "text.txt";
-//        TextReader textreader = new TextReader();
-//        List<Integer> testText;
-//        testText = textreader.readFile(textName);
-//        System.out.println(testText);
+        String textName = "text.txt";
+        TextReader textreader = new TextReader();
+        List<Integer> testText;
+        testText = textreader.readFile(textName);
+        System.out.println(testText);
 
 //        получение массива изображения
         byte[] bytesFromFile = null;
@@ -41,18 +41,22 @@ public class Main {
                 listImage.add((int)bytesFromFile[i]);
             }
 //            System.out.println();
-//            System.out.println(listImage);
+            System.out.println(listImage);
+            System.out.println();
 
-            // Запись в НОВЫЙ файл путь до которого someFile.png
-            final FileOutputStream fos = new FileOutputStream(new File("someFile.png"));
-            for (Integer num : listImage) {
-                fos.write(num);
-            }
-//            fos.write(bytesFromFile);
-            fos.close();
+//            // Запись в НОВЫЙ файл путь до которого someFile.png
+//            final FileOutputStream fos = new FileOutputStream(new File("someFile.png"));
+//            for (Integer num : listImage) {
+//                fos.write(num);
+//            }
+////            fos.write(bytesFromFile);
+//            fos.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+
+
 
 //      запись в аудио текста
         Analizator analizator = new Analizator();
@@ -108,7 +112,7 @@ public class Main {
 
         String filename2 = "1.wav";
         Music test1 = new Music();
-        test1.testPlay(filename2);
+//        test1.testPlay(filename2);
 //
 //        ----------------------------------------
 
@@ -125,10 +129,11 @@ public class Main {
 //        System.out.println(text);
 //        new Gnuplot(analizator).printAll();
 
+//
         try {
 
             // Запись в НОВЫЙ файл путь до которого someFile.png
-            final FileOutputStream fos = new FileOutputStream(new File("someFile.png"));
+            final FileOutputStream fos = new FileOutputStream(new File("someFile1.png"));
             for (Integer num : text) {
                 fos.write(num);
             }
@@ -138,6 +143,37 @@ public class Main {
             e.printStackTrace();
         }
 
+
+//        try {
+//        // Получение массива байт из картинки
+//        bytesFromFile = Files.readAllBytes(Paths.get(filename));
+//
+//        // Вывод в консоль массива байт, если убрать "(char)", то увидишь просто поток цифр.
+//        // В консоли картинки ты никак не получишь.
+//
+//        for (int i = 0; i < bytesFromFile.length; ++i) {
+////                System.out.print(bytesFromFile[i]);
+////                System.out.print(" ");
+//            listImage.add((int)bytesFromFile[i]);
+//        }
+////            System.out.println();
+//        System.out.println(listImage);
+//        System.out.println();
+//
+//        // Запись в НОВЫЙ файл путь до которого someFile.png
+//        final FileOutputStream fos = new FileOutputStream(new File("someFile.png"));
+//        for (Integer num : listImage) {
+//            fos.write(num);
+//        }
+////            fos.write(bytesFromFile);
+//        fos.close();
+//    } catch (Exception e) {
+//        e.printStackTrace();
+//    }
+
+
+
+//      получение технового файла
 //        PrintWriter out = new PrintWriter("resulttext.txt");
 //
 //        for (int i = 0; i < text.size(); ++i) {

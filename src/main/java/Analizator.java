@@ -39,17 +39,18 @@ public class Analizator {
 
     public void analize(List<Long> music, List<Integer> text) {
 
-        for (int i = 0; i < music.size(); ++i){
+        for (int i = 0; i < music.size(); ++i) {
             startList.add(music.get(i));
         }
 //        System.out.println(startList.size());
         textSize = text.size();
 
+        Gnuplot.printList("initialVector.gnuplot", startList);
 //        System.out.println();
-        System.out.println(text);
+//        System.out.println(text);
 //   представление массива текста в виде 0 и 1
         List<Boolean> textMass = textConversion(text);
-        System.out.println(textMass);
+//        System.out.println(textMass);
 
         List<Long> musikNot0 = newMass0(music);
 //        разбиение на сегменты
@@ -66,10 +67,11 @@ public class Analizator {
         // получение амплитуд
         List<List<Double>> amplitudesList = creationAmplitudes(fEndMass);
 //        System.out.print(amplitudesList.get(291));
+        Gnuplot.printList("initialAmplitude.gnuplot", amplitudesList.get(0));
 
 //        получение фаз
         List<List<Double>> phaseList = creationPhase(fEndMass);
-//        printList(phaseList, 12);
+        printList(phaseList, 0);
 
 //        получение разниц
         List<List<Double>> differencePhaseList = creationDifferencePhaseList(phaseList);
@@ -77,12 +79,12 @@ public class Analizator {
 
 //        кодирование информации получение новых фаз
         List<List<Double>> conversionPhase = conversionNewPhase(phaseList, differencePhaseList, textMass);
-//        printList(conversionPhase, 2);
+        printList(conversionPhase, 0);
 
         List<List<Double>> ph = new ArrayList<List<Double>>();
-        for ( int i = 0; i < conversionPhase.size(); ++i){
+        for (int i = 0; i < conversionPhase.size(); ++i) {
             List<Double> onePh = new ArrayList<Double>();
-            for ( int k = 0; k < conversionPhase.get(i).size(); ++k) {
+            for (int k = 0; k < conversionPhase.get(i).size(); ++k) {
                 if (i == 0) {
                     onePh.add(conversionPhase.get(i).get(k));
                 } else
@@ -93,6 +95,7 @@ public class Analizator {
 //        printList(ph, 2);
         //обратное преобразование из амплитуд и фаз в массив комплексные числа
         List<Complex[]> endComplexList = endComplexList(amplitudesList, ph);
+//        List<Complex[]> endComplexList = endComplexList(amplitudesList, phaseList);
 //        printMas(endComplexList, 237);
 
         // обратное преобразование Фурье
@@ -108,19 +111,32 @@ public class Analizator {
 
         //получение итогового массива
         endList = creationEnd(ifftMass);
-    }
+//        Integer razmer1 = endList.size();
 
+
+        List<Long> differenceVector = new ArrayList<Long>();
+        for (int i = 0; i < musikNot0.size(); i++) {
+            differenceVector.add(endList.get(i) - musikNot0.get(i));
+        }
+        Gnuplot.printList("differenceVector.gnuplot", differenceVector);
+    }
 
 
     public void backAnalize (List<Long> music, Integer N){
 //        разбиение на сегменты
         int sizeBitText = N * 8;
+        Gnuplot.printList("endVector.gnuplot", music);
 
         List<Complex[]> endMass2 = razbienie(music, N);
 
 //        БПФ
         List<Complex[]> fEndMass2 = creationFFTorIFFT(endMass2, true, 0, endMass2.size());
 //      printMas(fEndMass2, 237);
+
+        // получение амплитуд
+        List<List<Double>> amplitudesList2 = creationAmplitudes(fEndMass2);
+//        System.out.print(amplitudesList.get(291));
+        Gnuplot.printList("endAmplitude.gnuplot", amplitudesList2.get(0));
 
 //        получение фаз
         List<List<Double>> phaseList2 = creationPhase(fEndMass2);
@@ -223,6 +239,8 @@ public class Analizator {
         return bool;
     }
 
+
+//  кодирование информацйии, получение новых фаз
     public List<List<Double>> conversionNewPhase(
             List<List<Double>> phaseList,
             List<List<Double>> differencePhaseList,
@@ -243,15 +261,31 @@ public class Analizator {
             if (counter < textMass.size()) {
                 if (i > 0 && i < (phaseList.get(0).size() - 1)) {
                     if (textMass.get(counter)) {
+                        if ( phaseList.get(0).get((phaseList.get(0).size() - 1) - i) > 0 ){
+//                            newPhase.get(0).set((phaseList.get(0).size() - 1) - i, Math.PI / (-2));
+//                            newPhase.get(0).set(i + 1, Math.PI / (2));
+//                            newPhase.get(0).set((phaseList.get(0).size() - 1) - i, (phaseList.get(0).get(phaseList.get(0).size() - 1 - i)));
+//                            newPhase.get(0).set(i + 1, (-(phaseList.get(0).get(phaseList.get(0).size() - 1 - i))));
+                            newPhase.get(0).set((phaseList.get(0).size() - 1) - i, -0.1);
+                            newPhase.get(0).set(i + 1, 0.1);
+                        }
 //                        newPhase.get(nomer).set(i, Math.PI / (-2));
 //                        newPhase.get(nomer).set((phaseList.get(nomer).size() / 2) + i, Math.PI / (-2));
-                        newPhase.get(0).set((phaseList.get(0).size() - 1) - i, Math.PI / (-2));
-                        newPhase.get(0).set(i + 1, Math.PI / (2));
+//                        newPhase.get(0).set((phaseList.get(0).size() - 1) - i, Math.PI / (-2));
+//                        newPhase.get(0).set(i + 1, Math.PI / (2));
                     } else {
+                        if (phaseList.get(0).get((phaseList.get(0).size() - 1) - i) < 0){
+//                            newPhase.get(0).set((phaseList.get(0).size() - 1) - i, Math.PI / 2);
+//                            newPhase.get(0).set(i + 1, Math.PI / -2);
+//                            newPhase.get(0).set((phaseList.get(0).size() - 1) - i, (-(phaseList.get(0).get(phaseList.get(0).size() - 1 - i))));
+//                            newPhase.get(0).set(i + 1, (phaseList.get(0).get(phaseList.get(0).size() - 1 - i)));
+                            newPhase.get(0).set((phaseList.get(0).size() - 1) - i, 0.1);
+                            newPhase.get(0).set(i + 1, -0.1);
+                        }
 //                        newPhase.get(nomer).set(i, Math.PI / 2);
 //                        newPhase.get(nomer).set((phaseList.get(nomer).size() / 2) + i, Math.PI / 2);
-                        newPhase.get(0).set((phaseList.get(0).size() - 1) - i, Math.PI / 2);
-                        newPhase.get(0).set(i + 1, Math.PI / -2);
+//                        newPhase.get(0).set((phaseList.get(0).size() - 1) - i, Math.PI / 2);
+//                        newPhase.get(0).set(i + 1, Math.PI / -2);
                     }
                     counter++;
                 }
@@ -346,7 +380,7 @@ public class Analizator {
         for (int i = 0; i < sizeText; ++i) {
             textEnd.add(text.get(i));
         }
-        System.out.println(textEnd);
+//        System.out.println(textEnd);
 
         List<List<Integer>> textOne = new ArrayList<List<Integer>>();
         int n = 8;
@@ -371,7 +405,7 @@ public class Analizator {
 //            }
             text1.add(t);
         }
-        System.out.println(text1);
+//        System.out.println(text1);
         return text1;
     }
 
@@ -382,6 +416,9 @@ public class Analizator {
                 a = a | (1 << (7 - i));
 
         }
-        return a;
+        if (a > 127)
+            return (a - 256);
+        else
+            return a;
     }
 }
