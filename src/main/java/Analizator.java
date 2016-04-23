@@ -46,10 +46,11 @@ public class Analizator {
         textSize = text.size();
 
 //        System.out.println();
-        System.out.println(text);
+//        System.out.println(text);
 //   представление массива текста в виде 0 и 1
         List<Boolean> textMass = textConversion(text);
         System.out.println(textMass);
+        System.out.println();
 
         List<Long> musikNot0 = newMass0(music);
 //        разбиение на сегменты
@@ -128,7 +129,9 @@ public class Analizator {
 
 //        получение кодированного сообщения
         text = poluchenieTexta (phaseList2, sizeBitText);
-//        System.out.print(text);
+        System.out.println();
+        System.out.print(text);
+        System.out.println();
     }
 
 
@@ -371,7 +374,7 @@ public class Analizator {
 //            }
             text1.add(t);
         }
-        System.out.println(text1);
+//        System.out.println(text1);
         return text1;
     }
 

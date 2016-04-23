@@ -26,7 +26,7 @@ public class Main {
 
 //        получение массива изображения
         byte[] bytesFromFile = null;
-        String filename = "imagetest.png";
+        String filename = "sbor.png";
         List <Integer> listImage = new ArrayList<Integer>();
         try {
             // Получение массива байт из картинки
@@ -34,22 +34,16 @@ public class Main {
 
             // Вывод в консоль массива байт, если убрать "(char)", то увидишь просто поток цифр.
             // В консоли картинки ты никак не получишь.
-
             for (int i = 0; i < bytesFromFile.length; ++i) {
 //                System.out.print(bytesFromFile[i]);
 //                System.out.print(" ");
                 listImage.add((int)bytesFromFile[i]);
+
             }
+            System.out.print(listImage);
+            System.out.println();
 //            System.out.println();
 //            System.out.println(listImage);
-
-            // Запись в НОВЫЙ файл путь до которого someFile.png
-            final FileOutputStream fos = new FileOutputStream(new File("someFile.png"));
-            for (Integer num : listImage) {
-                fos.write(num);
-            }
-//            fos.write(bytesFromFile);
-            fos.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -108,7 +102,7 @@ public class Main {
 
         String filename2 = "1.wav";
         Music test1 = new Music();
-        test1.testPlay(filename2);
+//        test1.testPlay(filename2);
 //
 //        ----------------------------------------
 
@@ -126,7 +120,6 @@ public class Main {
 //        new Gnuplot(analizator).printAll();
 
         try {
-
             // Запись в НОВЫЙ файл путь до которого someFile.png
             final FileOutputStream fos = new FileOutputStream(new File("someFile.png"));
             for (Integer num : text) {
