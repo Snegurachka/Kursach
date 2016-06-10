@@ -16,7 +16,7 @@ public class FrameDecoder extends JFrame {
     public static final int DEFAULT_HEIGHT = 200;
 
     private String absolutePathToAudioFile = null;
-    private Integer startSegment = -1;
+//    private Integer startSegment = -1;
     private Integer textSize = -1;
 
         public FrameDecoder() {
@@ -106,9 +106,9 @@ public class FrameDecoder extends JFrame {
 //                        startSegment = Integer.parseInt(startSegmentWindow.getText());
                     } catch (Exception exc) {
                         textSize = -1;
-                        startSegment = -1;
+
                     }
-                    if (absolutePathToAudioFile != null && startSegment >= 0 && textSize >= 0) {
+                    if (absolutePathToAudioFile != null && textSize >= 0) {
                         endText1.setText("");
                         endText2.setText("");
                         loaderImageLabel.setVisible(true);
