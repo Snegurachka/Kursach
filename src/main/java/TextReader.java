@@ -1,4 +1,6 @@
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Vector;
 
@@ -7,7 +9,7 @@ import java.util.Vector;
  */
 public class TextReader {
 
-    public Vector<Integer> readFile(String name) throws Exception {
+    public Vector<Integer> readFile(String name) throws IOException {
         int size;
 
         InputStream f1 = new FileInputStream(name);

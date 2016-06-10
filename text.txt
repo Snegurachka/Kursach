@@ -1,25 +1,153 @@
-Computer-aided design (CAD) is the use of computer systems to aid in the creation, modification, analysis, or optimization of a design.[1]
-CAD software is used to increase the productivity of the designer, improve the quality of design, improve communications through
-documentation, and to create a database for manufacturing.[2] CAD output is often in the form of electronic files for print, machining,
-or other manufacturing operations.
+The Baroque is often thought of as a period of artistic style that used exaggerated motion and clear, easily interpreted detail to produce drama, tension,
+exuberance, and grandeur in sculpture, painting, architecture, literature, dance, theater, and music. The style began around 1600 in Rome, Italy, and spread
+to most of Europe.[1] The popularity and success of the Baroque style was encouraged by the Catholic Church, which had decided at the time of the Council of
+Trent, in response to the Protestant Reformation, that the arts should communicate religious themes in direct and emotional involvement.[2] The aristocracy
+also saw the dramatic style of Baroque architecture and art as a means of impressing visitors and expressing triumph, power and control. Baroque palaces are
+built around an entrance of courts, grand staircases and reception rooms of sequentially increasing opulence. However, "baroque" has resonance and application
+that extend beyond a simple reduction to either style or period.[3]
 
-Computer-aided design is used in many fields. Its use in designing electronic systems is known as electronic design automation, or EDA.
-In mechanical design it is known as mechanical design automation (MDA) or computer-aided design (CAD), which includes the process of
-creating a technical drawing with the use of computer software.[3]
+Brooch of an African, Walters Art Museum The French word baroque is derived from the Portuguese word "barroco" or Spanish "barrueco" both of which refer
+to a "rough or imperfect pearl", though whether it entered those languages via Latin, Arabic, or some other source is uncertain.[4] It is also yields the
+Italian "barocco" and modern Spanish "barroco", German "Barock", Dutch "Barok", and so on. The 1911  Britannica 11th edition thought the term was
+derived from the Spanish barrueco, a large, irregularly-shaped pearl, and that it had for a time been confined to the craft of the jeweller.[5] Others
+derive it from the mnemonic term "Baroco", a supposedly laboured form of syllogism in logical Scholastica.[6] The Latin root can be found in bis-roca.[7]
 
-CAD software for mechanical design uses either vector-based graphics to depict the objects of traditional drafting, or may also produce
-raster graphics showing the overall appearance of designed objects. However, it involves more than just shapes. As in the manual drafting
-of technical and engineering drawings, the output of CAD must convey information, such as materials, processes, dimensions, and
-tolerances, according to application-specific conventions.
+In informal usage, the word baroque can simply mean that something is "elaborate", with many details, without reference to the Baroque styles of the 17th
+and 18th centuries.
 
-CAD may be used to design curves and figures in two-dimensional (2D) space; or curves, surfaces, and solids in three-dimensional (3D)
-space.[4]
+The word "Baroque", like most periodic or stylistic designations, was invented by later critics rather than practitioners of the arts in the 17th and early
+18th centuries. It is a French transliteration of the Portuguese phrase "barroca", which means "irregular pearl", and natural pearls that deviate
+from the usual, regular forms so they do not have an axis of rotation are known as "baroque pearls".[8]
 
-CAD is an important industrial art extensively used in many applications, including automotive, shipbuilding, and aerospace industries,
-industrial and architectural design, prosthetics, and many more. CAD is also widely used to produce computer animation for special
-effects in movies, advertising and technical manuals, often called DCC digital content creation. The modern ubiquity and power of
-computers means that even perfume bottles and shampoo dispensers are designed using techniques unheard of by engineers of the 1960s.
-Because of its enormous economic importance, CAD has been a major driving force for research in computational geometry, computer
-graphics (both hardware and software), and discrete differential geometry.[5]
+The term "Baroque" was initially used in a derogatory sense, to underline the excesses of its emphasis. In particular, the term was used to describe its
+eccentric redundancy and noisy abundance of details, which sharply contrasted the clear and sober rationality of the Renaissance. Although it was long
+thought that the word as a critical term was first applied to architecture, in fact it appears earlier in reference to music, in an anonymous, satirical
+review of the  in October 1733 of Jean-Philippe Rameau Hippolyte et Aricie, printed in the Mercure de France in May 1734. The critic implied that
+the novelty in this opera was "du barocque", complaining that the music lacked coherent melody, was unsparing with dissonances, constantly changed key and
+meter, and speedily ran through every compositional device.[9]
 
-The design of geometric models for object shapes, in particular, is occasionally called computer-aided geometric design (CAGD).[6]                                                                                                                                                                                                                                                                                                                                 The design of geometric models for object shapes, in particular, is occasionally called computer-aided geometric design (CAGD).[6]
+Modern taste and usage[edit]
+The Swiss-born art historian, Heinrich Wlfflin,started the rehabilitation of the word Baroque in his Renaissance und Barock (1888); Wlfflin
+identified the Baroque as "movement imported into mass", an art antithetic to Renaissance art. He did not make the distinctions between Mannerism and Baroque
+that modern writers do, and he ignored the later phase, the academic Baroque that lasted into the 18th century. Long despised, Baroque art and architecture
+became fashionable between the two World Wars, and has largely remained in critical favour. For example, the often extreme Sicilian Baroque architecture is
+today recognised largely due to the work of Sir Sacheverall Sitwell, whose Southern Baroque Art of 1924 was the first book to appreciate the style, followed
+by the more academic work of Anthony Blunt. In painting the gradual rise in popular esteem of Caravaggio has been the best barometer of modern taste.
+
+In art history it has become common to recognise "Baroque" stylistic phases, characterized by energetic movement and display, in earlier art, so that Sir
+John Boardman describes the ancient sculpture and His Sons as "one of the finest examples of the Hellenistic baroque",[10] and a later phase of
+Imperial Roman sculpture is also often called "Baroque". William Watson describes a late phase of Shang-dynasty Chinese ritual bronzes of the 11th century
+BC as "baroque".[11]
+
+The term "Baroque" may still be used, usually pejoratively, describing works of art, craft, or design that are thought to have excessive ornamentation or
+complexity of line. Development[edit] eneas Flees Burning Troy, Federico Barocci, 1598
+The Baroque originated around 1600, several decades after the Council of Trent (1545–63), by which the Roman Catholic Church answered many questions of
+internal reform, addressed the representational arts by demanding that paintings and sculptures in church contexts should speak to the illiterate rather
+than to the well-informed. This turn toward a populist conception of the function of ecclesiastical art is seen by many art historians as driving the
+innovations of Caravaggio and brothers Agostino and Annibale Carracci, all of whom were working (and competing for commissions) in Rome around 1600.
+
+The appeal of Baroque style turned consciously from the witty, intellectual qualities of 16th-century Mannerist art to a visceral appeal aimed at the senses.
+It employed an iconography that was direct, simple, obvious, and theatrical (illustration, right). Baroque art drew on certain broad and heroic tendencies
+in Annibale Carracci and his circle, and found inspiration in other artists like Correggio and Caravaggio and Federico Barocci (illustration, right),
+nowadays sometimes termed 'proto-Baroque'. Germinal ideas of the Baroque can also be found in the work of Michelangelo. Some general parallels in music make
+the expression "Baroque music" useful: there are contrasting phrase lengths, harmony and counterpoint have ousted polyphony, and orchestral color makes a
+stronger appearance. Even more generalized parallels perceived by some experts in philosophy, prose style and poetry, are harder to pinpoint.
+
+Though Baroque was superseded in many centers by the Rococo style, beginning in France in the late 1720s, especially for interiors, paintings and the
+decorative arts, the Baroque style continued to be used in architecture until the advent of Neoclassicism in the later 18th century. See the Neapolitan
+palace of Caserta, a Baroque palace (though in a chaste exterior) whose construction began in 1752.
+
+
+St. Nicholas Church in Lesser Town in Prague was founded in 1703 under lead of Baroque architect Christoph Dientzenhofer.
+In paintings Baroque gestures are broader than Mannerist gestures: less ambiguous, less arcane and mysterious, more like the stage gestures of opera,
+a major Baroque art form. Baroque poses depend on contrapposto ("counterpoise"), the tension within the figures that move the planes of shoulders and
+hips in counterdirections. See Bernini's David.
+
+The dryer, less dramatic and coloristic, chastened later stages of 18th century Baroque architectural style are often seen as a separate Late Baroque
+manifestation, for example in buildings by Claude Perrault. Academic characteristics in the neo-Palladian style, epitomized by William Kent, are a parallel
+development in Britain and the British colonies: within interiors, Kent's furniture designs are vividly influenced by the Baroque furniture of Rome and
+Genoa, hierarchical tectonic sculptural elements, meant never to be moved from their positions, completed the wall decoration. Baroque is a style of
+unity imposed upon rich, heavy detail.
+
+The Baroque was defined by Heinrich Wölfflin as the age where the oval replaced the circle as the center of composition, that centralization replaced
+balance, and that coloristic and "painterly" effects began to become more prominent. Art historians, often Protestant ones, have traditionally emphasized
+that the Baroque style evolved during a time in which the Roman Catholic Church had to react against the many revolutionary cultural movements that
+produced a new science and new forms of religion—Reformation. It has been said that the monumental Baroque is a style that could give the Papacy, like
+secular absolute monarchies, a formal, imposing way of expression that could restore its prestige, at the point of becoming somehow symbolic of the
+Counter-Reformation.
+
+Whether this is the case or not, it was successfully developed in Rome, where Baroque architecture widely renewed the central areas with perhaps the
+most important urbanistic revision.
+
+A defining statement of what Baroque signifies in painting is provided by the series of paintings executed by Peter Paul Rubens for Marie de Medici at
+the Luxembourg Palace in Paris (now at the Louvre),[15] in which a Catholic painter satisfied a Catholic patron: Baroque-era conceptions of monarchy,
+iconography, handling of paint, and compositions as well as the depiction of space and movement.
+
+Baroque style featured "exaggerated lighting, intense emotions, release from restraint, and even a kind of artistic sensationalism". Baroque art did not
+really depict the life style of the people at that time; however, "closely tied to the Counter-Reformation, this style melodramatically reaffirmed the
+emotional depths of the Catholic faith and glorified both church and monarchy" of their power and influence.[16]
+
+There were highly diverse strands of Italian baroque painting, from Caravaggio to Cortona; both approaching emotive dynamism with different styles. The
+most prominent Spanish painter of the Baroque was Diego Velázquez.[17]
+
+Another frequently cited work of Baroque art is Bernini's Saint Theresa in Ecstasy for the Cornaro chapel in Saint Maria della Vittoria, which brings
+together architecture, sculpture, and theatre into one grand conceit.[18] Still-life, by Josefa de Óbidos, c. 1679, Santarém, Portugal, Municipal Library
+The later Baroque style gradually gave way to a more decorative Rococo.
+
+A rather different art developed out of northern realist traditions in 17th century Dutch Golden Age painting, which had very little religious art, and
+little history painting, instead playing a crucial part in developing secular genres such as still life, genre paintings of everyday scenes, and landscape
+painting. While the Baroque nature of Rembrandt's art is clear, the label is less often used for Vermeer and many other Dutch artists. Flemish Baroque
+painting shared a part in this trend, while also continuing to produce the traditional categories.
+
+In a similar way the French classical style of painting exemplified by Poussin is often classed as Baroque, and does share many qualities of the Italian
+painting of the same period, although the poise and restraint derived from following classical ideas typically give it a very different overall mood.
+
+Stanislaus Kostka on his deathbed by Pierre Le Gros the Younger In Baroque sculpture, groups of figures assumed new importance and there was a dynamic
+movement and energy of human forms—they spiraled around an empty central vortex, or reached outwards into the surrounding space. For the first time,
+Baroque sculpture often had multiple ideal viewing angles. The characteristic Baroque sculpture added extra-sculptural elements, for example, concealed
+lighting, or water fountains. Aleijadinho in Brazil was also one of the great names of baroque sculpture, and his master work is the set of statues of
+the Santuário de Bom Jesus de Matosinhos in Congonhas. The soapstone sculptures of old testament prophets around the terrace are considered amongst his
+finest work.
+
+The architecture, sculpture and fountains of Bernini (1598–1680) give highly charged characteristics of Baroque style. Bernini was undoubtedly the most
+important sculptor of the Baroque period. He approached Michelangelo in his omnicompetence: Bernini sculpted, worked as an architect, painted, wrote plays,
+and staged spectacles. In the late 20th century Bernini was most valued for his sculpture, both for his virtuosity in carving marble and his ability to
+create figures that combine the physical and the spiritual. He was also a fine sculptor of bust portraits in high demand among the powerful.
+
+Bernini's Cornaro chapel[edit]
+A good example of Bernini's Baroque work is his St. Theresa in Ecstasy (1645–52), created for the Cornaro Chapel of the church of Santa Maria della
+Vittoria, Rome. Bernini designed the entire chapel, a subsidiary space along the side of the church, for the Cornaro family.
+
+
+Bernini's Ecstasy of St. Teresa
+Saint Theresa, the focal point of the chapel, is a soft white marble statue surrounded by a polychromatic marble architectural framing. This structure
+conceals a window which lights the statue from above. Figure-groups of the Cornaro family sculpted in shallow relief inhabit opera boxes on the two side
+walls of the chapel. The setting places the viewer as a spectator in front of the statue with the Cornaro family leaning out of their box seats and
+craning forward to see the mystical ecstasy of the saint.
+
+St. Theresa is highly idealized and in an imaginary setting. She was a popular saint of the Catholic Reformation. She wrote of her mystical experiences
+for an audience of the nuns of her Carmelite Order; these writings had become popular reading among lay people interested in spirituality. In her writings,
+she described the love of God as piercing her heart like a burning arrow. Bernini materializes this by placing St. Theresa on a butt while a Cupid
+figure holds a golden arrow made of metal and smiles down at her. The angelic figure is not preparing to plunge the arrow into her heart—rather, he
+has withdrawn it. St. Theresa's face reflects not the anticipation of ecstasy, but her current fulfillment.
+
+This work is widely considered a masterpiece of the Baroque, although the mix of religious and erotic imagery (faithful to St Teresa's own written
+account) may raise modern eyebrows. However, Bernini was a devout Catholic and was not attempting to satirize the experience of a chaste nun. Rather,
+he aimed to portray religious experience as an intensely physical one. Theresa described her bodily reaction to spiritual enlightenment in a language
+of ecstasy used by many mystics, and Bernini's depiction is earnest.
+
+The Cornaro family promotes itself discreetly in this chapel; they are represented visually, but are placed on the sides of the chapel, witnessing
+the event from balconies. As in an opera house, the Cornaro have a privileged position in respect to the viewer, in their private reserve, closer to
+the saint; the viewer, however, has a better view from the front. They attach their name to the chapel, but St. Theresa is the focus. It is a private
+chapel in the sense that no one could say mass on the altar beneath the statue (in the 17th century and probably through the 19th) without permission
+from the family, but the only thing that divides the viewer from the image is the altar rail. The spectacle functions both as a demonstration of mysticism
+and as a piece of family pride.
+
+Architecture[edit]
+The main altar of St. John's Co-Cathedral, Malta
+Main article: Baroque architecture
+In Baroque architecture, new emphasis was placed on bold massing, colonnades, domes, light-and-shade (chiaroscuro), 'painterly' color effects, and the
+bold play of volume and void. In interiors, Baroque movement around and through a void informed monumental staircases that had no parallel in previous
+architecture. The other Baroque innovation in worldly interiors was the state apartment, a sequence of increasingly rich interiors that culminated in a
+presence chamber or throne room or a state bedroom. The sequence of monumental stairs followed by a state apartment was copied in smaller scale everywhere
+in aristocratic dwellings of any pretensions.

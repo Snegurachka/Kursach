@@ -26,11 +26,11 @@ public class SimpleFrame extends JFrame {
         setTitle("Выбор метода");
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(null);
-        JButton encodeButton = new JButton("Шифрование");
+        JButton encodeButton = new JButton("<html><font size = +2><b><i> Шифрование </i></b></font>");
         encodeButton.setSize(300, 100);
         encodeButton.setLocation(200, 70);
 
-        JButton decodeButton = new JButton("Дешифрование");
+        JButton decodeButton = new JButton("<html><font size = +2><b><i> Дешифрование </i></b></font>");
         decodeButton.setSize(300, 100);
         decodeButton.setLocation(200, 220);
         buttonPanel.add(encodeButton);

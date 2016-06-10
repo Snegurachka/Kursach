@@ -24,40 +24,40 @@ public class FrameDecoder extends JFrame {
             JPanel panel = new JPanel();
             panel.setLayout(null);
 
-            final JLabel initialData = new JLabel("Исходные данные:");
-            initialData.setSize(200, 50);
-            initialData.setLocation(50, 10);
+            final JLabel initialData = new JLabel("<html><font size = +2> Исходные данные: </font>");
+            initialData.setSize(400, 50);
+            initialData.setLocation(50, 30);
             panel.add(initialData);
 
-            final JLabel audioLabel = new JLabel("Выберите аудио");
+            final JLabel audioLabel = new JLabel("<html><font size = +1> Аудио </font>");
             audioLabel.setSize(200, 50);
-            audioLabel.setLocation(70, 60);
+            audioLabel.setLocation(70, 70);
             panel.add(audioLabel);
 
-            JButton audioButton = new JButton("Выбрать аудио");
+            JButton audioButton = new JButton("<html><font size = +1><i> Выбрать аудио </i></font>");
             audioButton.setSize(200, 50);
-            audioButton.setLocation(40, 100);
+            audioButton.setLocation(40, 110);
             panel.add(audioButton);
 
-            final JLabel sizeTextLabel = new JLabel("Введите размер сообщения");
+            final JLabel sizeTextLabel = new JLabel("<html><font size = +1> Введите размер сообщения </font>");
             sizeTextLabel.setSize(200, 50);
-            sizeTextLabel.setLocation(50, 160);
+            sizeTextLabel.setLocation(50, 170);
             panel.add(sizeTextLabel);
 
             final JTextField sizeTextWindow = new JTextField();
             sizeTextWindow.setSize(200, 50);
-            sizeTextWindow.setLocation(40, 200);
+            sizeTextWindow.setLocation(40, 220);
             panel.add(sizeTextWindow);
 
-            final JLabel startSegmentLabel = new JLabel("Введите номер сегмента");
-            startSegmentLabel.setSize(200, 50);
-            startSegmentLabel.setLocation(50, 260);
-            panel.add(startSegmentLabel);
+//            final JLabel startSegmentLabel = new JLabel("Введите номер сегмента");
+//            startSegmentLabel.setSize(200, 50);
+//            startSegmentLabel.setLocation(50, 260);
+//            panel.add(startSegmentLabel);
 
-            final JTextField startSegmentWindow = new JTextField();
-            startSegmentWindow.setSize(200, 50);
-            startSegmentWindow.setLocation(40, 300);
-            panel.add(startSegmentWindow);
+//            final JTextField startSegmentWindow = new JTextField();
+//            startSegmentWindow.setSize(200, 50);
+//            startSegmentWindow.setLocation(40, 300);
+//            panel.add(startSegmentWindow);
 
             final JLabel endText = new JLabel("");
             endText.setSize(200, 50);
@@ -74,8 +74,8 @@ public class FrameDecoder extends JFrame {
             endText2.setLocation(400, 140);
             panel.add(endText2);
 
-            JButton solveButton = new JButton("Решить");
-            solveButton.setSize(400, 100);
+            JButton solveButton = new JButton("<html><font size = +2><b><i> Извлечь </i></b></font>");
+            solveButton.setSize(350, 70);
             solveButton.setLocation(300, 300);
             panel.add(solveButton);
 
@@ -103,7 +103,7 @@ public class FrameDecoder extends JFrame {
                 public void actionPerformed(ActionEvent e) {
                     try {
                         textSize = Integer.parseInt(sizeTextWindow.getText());
-                        startSegment = Integer.parseInt(startSegmentWindow.getText());
+//                        startSegment = Integer.parseInt(startSegmentWindow.getText());
                     } catch (Exception exc) {
                         textSize = -1;
                         startSegment = -1;

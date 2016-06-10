@@ -2,6 +2,7 @@ import wav.Test;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -22,91 +23,121 @@ public class FrameEncoder extends JFrame {
     final private Music player;
     private Thread play;
 
-    public FrameEncoder() {
-        player = new Music();
-       // setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        JPanel panel = new JPanel();
-        panel.setLayout(null);
+    private JButton audioButton;
+    private JButton textButton;
+    private JButton musicStartPlay;
+    private JButton musicStopPlay;
+    private JButton musicEndStartPlay;
+    private JButton musicEndStopPlay;
+    private JButton solveButton;
+    private JButton stopStop;
 
-        final JLabel initialData = new JLabel("Исходные данные:");
-        initialData.setSize(200, 50);
-        initialData.setLocation(50, 10);
-        panel.add(initialData);
+    private JLabel audioLabel;
+    private JLabel textLabel;
+    private JLabel endText;
+    private JLabel endText1;
+    private JLabel endText2;
+    private JLabel loaderImageLabel;
+    private JLabel musicEndName;
 
-        final JLabel audioLabel = new JLabel("аудио");
-        audioLabel.setSize(200, 50);
-        audioLabel.setLocation(70, 60);
-        panel.add(audioLabel);
 
-        JButton audioButton = new JButton("Выбрать аудио");
+    private void addButtons(JPanel panel) {
+
+        audioButton = new JButton("<html><font size = +1><i> Выбрать аудио </i></font>");
         audioButton.setSize(200, 50);
-        audioButton.setLocation(40, 100);
+        audioButton.setLocation(40, 110);
         panel.add(audioButton);
 
-        final JLabel endText = new JLabel("");
-        endText.setSize(200, 50);
-        endText.setLocation(400, 50);
-        panel.add(endText);
-
-        final JLabel endText1 = new JLabel("");
-        endText1.setSize(200, 50);
-        endText1.setLocation(400, 80);
-        panel.add(endText1);
-
-        final JLabel endText2 = new JLabel("");
-
-        endText2.setSize(200, 50);
-        endText2.setLocation(400, 110);
-        panel.add(endText2);
-
-        final JLabel textLabel = new JLabel("текст");
-        textLabel.setSize(200, 50);
-        textLabel.setLocation(70, 150);
-        panel.add(textLabel);
-
-        JButton textButton = new JButton("Выбрать текст");
+        textButton = new JButton("<html><font size = +1><i> Выбрать файл </i></font>");
         textButton.setSize(200, 50);
-        textButton.setLocation(40, 190);
+        textButton.setLocation(40, 200);
         panel.add(textButton);
 
-        JButton musicStartPlay = new JButton(new ImageIcon("static/playButtonImage.png"));
+        musicStartPlay = new JButton(new ImageIcon("static/start32.png"));
         musicStartPlay.setSize(50, 50);
-        musicStartPlay.setLocation(250, 99);
+        musicStartPlay.setLocation(250, 109);
         panel.add(musicStartPlay);
 
-        final JLabel musicEndName = new JLabel("", SwingConstants.RIGHT);
-        musicEndName.setSize(300, 50);
-        musicEndName.setLocation(300, 200);
-        panel.add(musicEndName);
-
-        JButton solveButton = new JButton("Решить");
-        solveButton.setSize(400, 100);
+        solveButton = new JButton("<html><font size = +2><b><i> Зашифровать </i></b></font>");
+        solveButton.setSize(350, 70);
         solveButton.setLocation(300, 300);
         panel.add(solveButton);
 
-        final JButton musicEndStartPlay = new JButton(new ImageIcon("static/playButtonImage.png"));
+        musicEndStartPlay = new JButton(new ImageIcon("static/start32.png"));
         musicEndStartPlay.setSize(50, 50);
         musicEndStartPlay.setLocation(600, 200);
         panel.add(musicEndStartPlay);
 
-        final JButton musicStopPlay = new JButton(new ImageIcon("static/stoop2.png"));
+        musicStopPlay = new JButton(new ImageIcon("static/stopp32.png"));
         musicStopPlay.setSize(50, 50);
-        musicStopPlay.setLocation(300, 99);
+        musicStopPlay.setLocation(304, 109);
         panel.add(musicStopPlay);
 
-        final JButton musicEndStopPlay = new JButton(new ImageIcon("static/stoop2.png"));
+        musicEndStopPlay = new JButton(new ImageIcon("static/stopp32.png"));
         musicEndStopPlay.setSize(50, 50);
         musicEndStopPlay.setLocation(650, 200);
         panel.add(musicEndStopPlay);
 
+        stopStop = new JButton("<html><font size = +2><b><i> Отменить </i></b></font>");
+        stopStop.setSize(200, 70);
+        stopStop.setLocation(50, 300);
+        panel.add(stopStop);
+        stopStop.setVisible(false);
+    }
 
-        final JLabel loaderImageLabel = new JLabel("", SwingConstants.RIGHT);
+    private void addLabels(JPanel panel) {
+        final JLabel initialData = new JLabel("<html><font size = +2> Исходные данные: </font>");
+        initialData.setSize(400, 50);
+        initialData.setLocation(50, 30);
+        panel.add(initialData);
+
+        audioLabel = new JLabel("<html><font size = +1> Аудио </font>");
+        audioLabel.setSize(200, 50);
+        audioLabel.setLocation(70, 70);
+        panel.add(audioLabel);
+
+        endText = new JLabel("");
+        endText.setSize(200, 50);
+        endText.setLocation(400, 50);
+        panel.add(endText);
+
+        endText1 = new JLabel("");
+        endText1.setSize(200, 50);
+        endText1.setLocation(400, 80);
+        panel.add(endText1);
+
+        endText2 = new JLabel("");
+        endText2.setSize(200, 50);
+        endText2.setLocation(400, 110);
+        panel.add(endText2);
+
+        textLabel = new JLabel("<html><font size = +1> Секретный файл </font>");
+        textLabel.setSize(200, 50);
+        textLabel.setLocation(70, 160);
+        panel.add(textLabel);
+
+        musicEndName = new JLabel("", SwingConstants.RIGHT);
+        musicEndName.setSize(300, 50);
+        musicEndName.setLocation(300, 200);
+        panel.add(musicEndName);
+
+        loaderImageLabel = new JLabel("", SwingConstants.RIGHT);
         ImageIcon ii = new ImageIcon("static/load.gif");
         loaderImageLabel.setIcon(ii);
         loaderImageLabel.setSize(200, 200);
         loaderImageLabel.setLocation(400, 70);
         panel.add(loaderImageLabel);
         loaderImageLabel.setVisible(false);
+    }
+
+    public FrameEncoder() {
+        player = new Music();
+       // setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        JPanel panel = new JPanel();
+        panel.setLayout(null);
+
+        addButtons(panel);
+        addLabels(panel);
 
         audioButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -164,71 +195,15 @@ public class FrameEncoder extends JFrame {
                     endText1.setText("");
                     endText2.setText("");
                     loaderImageLabel.setVisible(true);
+                    stopStop.setVisible(true);
                     new Thread(new Runnable() {
                         public void run() {
-                            Test test = new Test();
-                            test.readWav(absolutePathToAudioFile);
-                            java.util.List<java.util.List<Long>> list = test.getBytes();
-                            java.util.List<Long> testMusic = list.get(0);
-                            Gnuplot.printList("testMusic.gnuplot", testMusic);
-
-//                            System.out.println(list.get(0).size());
-//                            System.out.println(list.get(1).size());
-
-                            TextReader textreader = new TextReader();
-                            try {
-                                java.util.List<Integer> testText;
-                                testText = textreader.readFile(absolutePathToTextFile);
-
-                                Analizator analizator = new Analizator();
-                                analizator.analize(testMusic, testText);
-                                java.util.List<Long> endVector = analizator.getEndList();
-                                Gnuplot.printList("endVector.gnuplot", endVector);
-
-                                Integer textSize = analizator.getTextSize();
-                                Integer last = absolutePathToAudioFile.lastIndexOf(".");
-                                String newName = absolutePathToAudioFile.substring(0, last);
-                                newEndName = newName + "_" + textSize + "_" + ".wav";
-//                              преобразование в один массив
-                                java.util.List<java.util.List<Long>> endMusic = new ArrayList<java.util.List<Long>>();
-                                System.out.println(endVector.size());
-                                System.out.println(list.get(1).size());
-                                java.util.List<Long> endOneMusic1 = new ArrayList<Long>();
-                                java.util.List<Long> endOneMusic2 = new ArrayList<Long>();
-                                for (int i = 0; i < endVector.size(); ++i) {
-                                    if (i < list.get(1).size() - 1) {
-                                        endOneMusic1.add(endVector.get(i));
-                                        endOneMusic2.add(list.get(1).get(i));
-                                    } else {
-                                        endOneMusic1.add(endVector.get(i));
-                                        endOneMusic2.add((long) 0 );
-                                    }
-                                }
-                                System.out.println(endOneMusic1.size());
-                                System.out.println(endOneMusic2.size());
-                                endMusic.add(endOneMusic1);
-                                endMusic.add(endOneMusic2);
-
-                                test.modificationBytes(endMusic);
-                                test.writeWav(newEndName);
-                                Integer lastNew = newEndName.lastIndexOf("/");
-                                String oneNameNewAufio = newEndName.substring(lastNew + 1);
-
-                                endText.setText("Выполнено успешно!");
-                                endText1.setText("Размер текста: " + textSize);
-                                musicEndName.setText(oneNameNewAufio);
-                                loaderImageLabel.setVisible(false);
-                                musicEndStartPlay.setVisible(true);
-                                musicEndStopPlay.setVisible(true);
-                            } catch (Exception error) {
-                                System.out.println(error);
-                                System.out.println("Ошибка при чтении в TextReader");
-                            }
+                            FrameEncoder.this.encode();
                         }
                     }).start();
                 } else {
-                    endText1.setText("Вы не ввели исходные данные");
-                    endText2.setText("Введите исходные данные");
+                    endText1.setText("<html><font size = +1> Вы не ввели исходные данные </font>");
+                    endText2.setText("<html><font size = +1> Введите исходные данные  </font>");
                 }
             }
         });
@@ -278,6 +253,69 @@ public class FrameEncoder extends JFrame {
             }
         });
         play.start();
+    }
+
+    private void encode() {
+        Test test = new Test();
+        test.readWav(absolutePathToAudioFile);
+        List<List<Long>> list = test.getBytes();
+        List<Long> testMusic = list.get(0);
+        Gnuplot.printList("testMusic.gnuplot", testMusic);
+
+        TextReader textreader = new TextReader();
+        try {
+            List<Integer> testText;
+            testText = textreader.readFile(absolutePathToTextFile);
+
+            Analizator analizator = new Analizator();
+            analizator.analize(testMusic, testText);
+            List<Long> endVector = analizator.getEndList();
+            Gnuplot.printList("endVector.gnuplot", endVector);
+
+            Integer textSize = analizator.getTextSize();
+            Integer last = absolutePathToAudioFile.lastIndexOf(".");
+            String newName = absolutePathToAudioFile.substring(0, last);
+            newEndName = newName + "_result" + ".wav";
+//                              преобразование в один массив
+            List<List<Long>> endMusic = new ArrayList<List<Long>>();
+            System.out.println(endVector.size());
+            System.out.println(list.get(1).size());
+            List<Long> endOneMusic1 = new ArrayList<Long>();
+            List<Long> endOneMusic2 = new ArrayList<Long>();
+            for (int i = 0; i < endVector.size(); ++i) {
+                if (i < list.get(1).size() - 1) {
+                    endOneMusic1.add(endVector.get(i));
+                    endOneMusic2.add(list.get(1).get(i));
+                } else {
+                    endOneMusic1.add(endVector.get(i));
+                    endOneMusic2.add((long) 0 );
+                }
+            }
+            System.out.println(endOneMusic1.size());
+            System.out.println(endOneMusic2.size());
+            endMusic.add(endOneMusic1);
+            endMusic.add(endOneMusic2);
+
+            test.modificationBytes(endMusic);
+            test.writeWav(newEndName);
+            Integer lastNew = newEndName.lastIndexOf("/");
+            String oneNameNewAufio = newEndName.substring(lastNew + 1);
+
+            setUIResponse(textSize, oneNameNewAufio);
+        } catch (Exception error) {
+            System.out.println(error);
+            System.out.println("Ошибка при чтении в TextReader");
+        }
+    }
+
+    private void setUIResponse(int textSize, String oneNameNewAudio) {
+        endText.setText("<html><font size = +1> Выполнено успешно </font>");
+        endText1.setText("<html><font size = +1> Размер файла: </font>" + textSize);
+        musicEndName.setText(oneNameNewAudio);
+        loaderImageLabel.setVisible(false);
+        stopStop.setVisible(false);
+        musicEndStartPlay.setVisible(true);
+        musicEndStopPlay.setVisible(true);
     }
 }
 

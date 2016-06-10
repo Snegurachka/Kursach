@@ -1,6 +1,6 @@
 set title 'Test'
 set grid
-set xlabel 'x'
-set ylabel 'y'
-plot 'differenceVector.gnuplot' using 1:2 w l lw 1 title 'endVector'
+set xlabel 'frequency'
+set ylabel 'phase'
+plot 'initialPhase.gnuplot' using 1:2 w l lw 1 title 'The initial phase'
 pause -1
