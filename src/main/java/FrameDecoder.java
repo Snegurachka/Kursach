@@ -90,6 +90,7 @@ public class FrameDecoder extends JFrame {
             audioButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     JFileChooser fileopen = new JFileChooser();
+                    fileopen.setCurrentDirectory(new File(new File(".."), "testFiles"));
                     int ret = fileopen.showDialog(null, "Открыть файл");
                     if (ret == JFileChooser.APPROVE_OPTION) {
                         File file = fileopen.getSelectedFile();
